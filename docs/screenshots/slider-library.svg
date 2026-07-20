@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="1280" height="760" rx="12" fill="#f0f2f5"/>
+
+  <!-- browser chrome -->
+  <rect width="1280" height="46" rx="12" fill="#1d2327"/><rect y="32" width="1280" height="14" fill="#1d2327"/>
+  <circle cx="28" cy="23" r="6" fill="#ff5f57"/><circle cx="50" cy="23" r="6" fill="#febc2e"/><circle cx="72" cy="23" r="6" fill="#28c840"/>
+  <text x="640" y="29" fill="#c3c4c7" font-size="14" text-anchor="middle">Sliders - MY Slider PRO</text>
+
+  <!-- header -->
+  <text x="40" y="96" fill="#172033" font-size="26" font-weight="700">Sliders</text>
+  <text x="40" y="122" fill="#667085" font-size="14">Create responsive image sliders from your WordPress Media Library. Export a slider as a portable ZIP, or import one.</text>
+  <rect x="1088" y="80" width="152" height="24" rx="12" fill="#eef2f6"/><text x="1164" y="97" text-anchor="middle" font-size="12" fill="#50575e">MY Slider PRO v1.0.0</text>
+
+  <!-- action bar -->
+  <text x="40" y="166" fill="#172033" font-size="14" font-weight="700">All sliders <tspan fill="#8a93a2">(3)</tspan></text>
+  <rect x="904" y="146" width="150" height="36" rx="5" fill="#2271b1"/><text x="979" y="169" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">Add New Slider</text>
+  <rect x="1066" y="146" width="76" height="36" rx="5" fill="#fff" stroke="#c3c4c7"/><text x="1104" y="169" fill="#50575e" font-size="13" text-anchor="middle">Import</text>
+  <rect x="1154" y="146" width="86" height="36" rx="5" fill="#fff" stroke="#2271b1"/><text x="1197" y="169" fill="#2271b1" font-size="13" text-anchor="middle">Settings</text>
+
+  <!-- card template -->
+  <g>
+    <!-- card 1 -->
+    <rect x="40" y="204" width="384" height="316" rx="8" fill="#fff" stroke="#d5dae4"/>
+    <clipPath id="t1"><rect x="56" y="220" width="352" height="150" rx="6"/></clipPath>
+    <g clip-path="url(#t1)">
+      <rect x="56" y="220" width="352" height="150" fill="#1d5368"/>
+      <path d="M56 370L180 268L268 330L352 262L408 370Z" fill="#70a9ba"/>
+      <circle cx="356" cy="256" r="18" fill="#ffd87d"/>
+    </g>
+    <rect x="64" y="228" width="118" height="22" rx="4" fill="#fff" opacity="0.92"/><text x="74" y="243" font-size="11" fill="#50575e">Custom thumbnail</text>
+    <text x="56" y="396" fill="#2271b1" font-size="16" font-weight="700">Homepage Slider</text>
+    <text x="56" y="418" fill="#667085" font-size="13">5 slides</text>
+    <rect x="56" y="430" width="252" height="30" rx="4" fill="#f1f3f6"/><text x="68" y="450" font-size="12" fill="#172033" font-family="ui-monospace,Menlo,Consolas,monospace">[myslider id="12"]</text><text x="326" y="450" font-size="12" fill="#2271b1">Copy</text>
+    <line x1="56" y1="478" x2="408" y2="478" stroke="#eaedf2"/>
+    <g font-size="12" fill="#2271b1"><text x="56" y="502">Edit</text><text x="102" y="502">Rename</text><text x="172" y="502">Duplicate</text><text x="256" y="502">Export</text><text x="316" y="502" fill="#b32d2e">Trash</text></g>
+
+    <!-- card 2 -->
+    <rect x="448" y="204" width="384" height="316" rx="8" fill="#fff" stroke="#d5dae4"/>
+    <clipPath id="t2"><rect x="464" y="220" width="352" height="150" rx="6"/></clipPath>
+    <g clip-path="url(#t2)">
+      <rect x="464" y="220" width="352" height="150" fill="#2a4d5f"/>
+      <path d="M464 370L600 300L700 340L760 296L816 370Z" fill="#5a8a9a"/>
+      <rect x="612" y="250" width="120" height="120" fill="#3a6475" opacity="0.5"/>
+    </g>
+    <rect x="472" y="228" width="78" height="22" rx="4" fill="#fff" opacity="0.92"/><text x="482" y="243" font-size="11" fill="#50575e">First slide</text>
+    <text x="464" y="396" fill="#2271b1" font-size="16" font-weight="700">Product Launch</text>
+    <text x="464" y="418" fill="#667085" font-size="13">4 slides</text>
+    <rect x="464" y="430" width="252" height="30" rx="4" fill="#f1f3f6"/><text x="476" y="450" font-size="12" fill="#172033" font-family="ui-monospace,Menlo,Consolas,monospace">[myslider id="27"]</text><text x="734" y="450" font-size="12" fill="#2271b1">Copy</text>
+    <line x1="464" y1="478" x2="816" y2="478" stroke="#eaedf2"/>
+    <g font-size="12" fill="#2271b1"><text x="464" y="502">Edit</text><text x="510" y="502">Rename</text><text x="580" y="502">Duplicate</text><text x="664" y="502">Export</text><text x="724" y="502" fill="#b32d2e">Trash</text></g>
+
+    <!-- card 3 -->
+    <rect x="856" y="204" width="384" height="316" rx="8" fill="#fff" stroke="#d5dae4"/>
+    <clipPath id="t3"><rect x="872" y="220" width="352" height="150" rx="6"/></clipPath>
+    <g clip-path="url(#t3)">
+      <rect x="872" y="220" width="352" height="150" fill="#3a4a63"/>
+      <path d="M872 370L1000 280L1090 330L1160 286L1224 370Z" fill="#6d7ea0"/>
+      <circle cx="1160" cy="262" r="16" fill="#f5d38a"/>
+    </g>
+    <rect x="880" y="228" width="78" height="22" rx="4" fill="#fff" opacity="0.92"/><text x="890" y="243" font-size="11" fill="#50575e">First slide</text>
+    <text x="872" y="396" fill="#2271b1" font-size="16" font-weight="700">Photo Gallery</text>
+    <text x="872" y="418" fill="#667085" font-size="13">5 slides</text>
+    <rect x="872" y="430" width="252" height="30" rx="4" fill="#f1f3f6"/><text x="884" y="450" font-size="12" fill="#172033" font-family="ui-monospace,Menlo,Consolas,monospace">[myslider id="41"]</text><text x="1142" y="450" font-size="12" fill="#2271b1">Copy</text>
+    <line x1="872" y1="478" x2="1224" y2="478" stroke="#eaedf2"/>
+    <g font-size="12" fill="#2271b1"><text x="872" y="502">Edit</text><text x="918" y="502">Rename</text><text x="988" y="502">Duplicate</text><text x="1072" y="502">Export</text><text x="1132" y="502" fill="#b32d2e">Trash</text></g>
+  </g>
+
+  <!-- about card -->
+  <rect x="40" y="548" width="1200" height="150" rx="8" fill="#fff" stroke="#d5dae4"/>
+  <text x="64" y="588" fill="#172033" font-size="18" font-weight="700">MY Slider PRO</text>
+  <text x="64" y="614" fill="#50575e" font-size="14">Fast, responsive, accessible sliders for WordPress.</text>
+  <text x="64" y="644" fill="#8a93a2" font-size="13">v1.0.0 · open source · GPL-3.0 · © 2026 Aminudin Murad</text>
+  <text x="840" y="588" fill="#596579" font-size="12" font-weight="700">SUPPORT OPEN-SOURCE DEVELOPMENT</text>
+  <g font-size="13" fill="#334155">
+    <rect x="840" y="606" width="88" height="34" rx="17" fill="#fff" stroke="#c3c4c7"/><text x="884" y="628" text-anchor="middle">GitHub</text>
+    <rect x="940" y="606" width="140" height="34" rx="17" fill="#fff" stroke="#c3c4c7"/><text x="1010" y="628" text-anchor="middle">GitHub Sponsors</text>
+    <rect x="1092" y="606" width="68" height="34" rx="17" fill="#fff" stroke="#c3c4c7"/><text x="1126" y="628" text-anchor="middle">Ko-fi</text>
+    <rect x="1172" y="606" width="68" height="34" rx="17" fill="#fff" stroke="#c3c4c7"/><text x="1206" y="628" text-anchor="middle">PayPal</text>
+  </g>
+
+  <rect x="1064" y="708" width="176" height="24" rx="12" fill="#1d2327" opacity=".72"/>
+  <text x="1152" y="724" fill="#fff" font-size="11" text-anchor="middle">Illustrative mockup</text>
+</svg>

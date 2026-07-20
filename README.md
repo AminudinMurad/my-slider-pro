@@ -2,7 +2,7 @@
 
 MY Slider PRO is a modern, open-source slider plugin for WordPress. This repository contains the plugin code and small, dependency-free local verification tools.
 
-The current build focuses on responsive sliders: editable slide copy, calls to action, image layers, per-layer animations, focal-point and background controls, and a live device preview inside WordPress.
+The current build focuses on responsive sliders: a card-grid slider library, canvas-first layer editing, independent Heading/Text/Button/Image layers, per-slide backgrounds with solid or gradient overlays, Full-width or Boxed layouts, per-layer animations, and a live device preview inside WordPress.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
@@ -22,18 +22,20 @@ image focal point while keeping WordPress responsive sources and alternative tex
 
 ## Latest Features
 
+- **Card-grid slider library** — manage every slider from a visual card grid with an assignable per-slider thumbnail (or automatic first-slide fallback), slide counts, and copyable shortcodes.
 - **Native Media Library workflow** — pick images in the familiar media modal; no re-uploading.
+- **Canvas-first editing** — click a Heading, Text, or Button layer on the canvas to edit it in place. The sidebar is a focused Layer Inspector for position, styling, and animation; the sortable Layers list and global Slider Settings sit in full-width panels below the preview.
 - **Responsive layer editor** — switch between Desktop, Tablet, and Phone frames while editing the real slide composition.
-- **Canvas-first editing** — click a Heading, Description, or Button layer on the canvas to edit its text in place. The sidebar is a focused Layer Inspector for position, styling, and animation; the sortable Layers list and global Slider Settings sit in full-width panels below the preview.
-- **Four independent layers** — position Heading, Description, Button, and optional Image layers separately with bounded X/Y controls, anchor presets, keyboard nudging, and magnetic drag snapping.
-- **Front-to-back layer sorting** — drag Heading, Description, Button, and Image rows to control the public z-index order for each slide.
-- **Additional overlay layers** — add extra Heading, Text, Button, and Image layers to any slide from the Visual Editor toolbox, each with its own Desktop/Tablet/Phone position, styling, opacity, animation, and optional link.
-- **Per-layer opacity** — bounded 10–100% opacity controls for the Heading, Description, Button, and Image layers, reflected live in the editor and on the public slider.
-- **Layer links** — add optional URLs to Heading, Description, Button, and Image layers.
+- **Independent layers** — position Heading, Text, Button, and Image layers separately with bounded X/Y controls, anchor presets, keyboard nudging, and magnetic drag snapping.
+- **Front-to-back layer sorting** — drag whole layer rows to control the public z-index order for each slide.
+- **Repeatable layers with sensible caps** — add up to two of each layer type per slide (Heading, Text, Button, Image), each numbered (Heading 1, Heading 2, …) with its own Desktop/Tablet/Phone position, styling, opacity, animation, and optional link. Add New Slide and the per-type Add layer buttons grey out at their caps (up to 5 slides per slider).
+- **Per-layer opacity** — bounded 10–100% opacity controls for every layer, reflected live in the editor and on the public slider.
+- **Layer links** — add optional URLs to any Heading, Text, Button, or Image layer.
 - **Per-layer animation** — choose none, fade, slide, or zoom animations with layer-specific delay, duration, and easing controls.
 - **Exact font families** — use theme default, Poppins, Montserrat, or Inter with matching font loading in the editor and frontend.
-- **Per-slide styling** — style Heading and Description independently with their own color, typography, size, alignment, and responsive position, plus CTA text/background colors, text size, corner radius, padding, image-layer width, opacity, and a matching live preview.
-- **Slide background controls** — give each slide a background color, fill mode (cover, fill, fit, or actual size), nine-point position, tint overlay color, and an optional grayscale filter, all reflected live in the editor and on the public slider.
+- **Per-slide styling** — style each layer independently with its own color, typography, size, alignment, and responsive position, plus CTA text/background colors, text size, corner radius, padding, image-layer width, opacity, and a matching live preview.
+- **Per-slide backgrounds and overlays** — set a replaceable background image (from a panel control or the editor toolbar), fill mode (cover, fill, fit, or actual size), nine-point position, an optional grayscale filter, and a background overlay — None, Solid, or Gradient with colour, second colour, opacity, and direction — all reflected live in the editor and on the public slider.
+- **Full-width or Boxed layout** — constrain the slider shell to a responsive maximum width, or let it span full width.
 - **Tablet and mobile controls** — set tablet and phone height, content alignment, text width, CTA size, and phone-specific arrow hiding.
 - **Accessible by default** — keyboard-operable ordering, real navigation buttons, slide dots, pause/resume control, reduced-motion support, and preserved image alt text.
 - **Fast touch interaction** — CSS scroll-snap provides native swipe behavior without a large slider dependency.
@@ -47,17 +49,25 @@ image focal point while keeping WordPress responsive sources and alternative tex
 
 ## Preview
 
-### Responsive layer editor
+### Slider library
+
+Card-grid overview with per-slider thumbnails, copyable shortcodes, and quick actions (edit, rename, duplicate, export, trash).
+
+![MY Slider PRO slider library: a card grid of sliders with thumbnails, slide counts, copyable shortcodes, and per-slider actions](docs/screenshots/slider-library.svg)
+
+### Visual layer editor
+
+Canvas-first editing with an ADD LAYER toolbar, numbered per-type layers, a per-slide background with solid or gradient overlays, and a live Layer Inspector.
+
+![MY Slider PRO visual layer editor: an ADD LAYER toolbar, a live slide canvas with numbered layers, a Layer Inspector for position and styling, and a slide filmstrip](docs/screenshots/visual-editor.svg)
+
+### Responsive device preview
 
 ![MY Slider PRO responsive editor showing Desktop, Tablet, and Phone preview controls beside slider settings](docs/screenshots/responsive-editor.svg)
 
 ### Phone layout editor
 
 ![MY Slider PRO phone layout editor showing mobile copy, CTA placement, and mobile controls](docs/screenshots/mobile-layout-editor.svg)
-
-### Add Slider editor
-
-![MY Slider PRO Add Slider editor: editable slides, responsive settings, device preview, and a copyable shortcode](docs/screenshots/add-slider.svg)
 
 ### Responsive front-end slider
 
@@ -108,9 +118,9 @@ Main files:
 
 1. Open **MY Slider PRO > Add Slider** in WordPress.
 2. Name the slider and choose images from the Media Library.
-3. Reorder slides with drag and drop or the keyboard-accessible arrow controls, then open a slide to add its heading, description, layer links, button, image layer, and image focus.
-4. Use **Layer Editor** to check Desktop, Tablet, and Phone layouts. Select the Heading, Description, Button, or Image overlay directly on the image or layer list, drag the layer rows to set the front-to-back order, use the grid and safe-area guides, drag with magnetic snapping, enter precise X/Y values in the inspector, or choose an anchor preset. Each layer and device saves its position independently.
-5. Set desktop, tablet, and mobile height, content alignment, text width, CTA sizing, image focus, overlay, and navigation behavior, then save and copy the generated shortcode:
+3. Reorder slides with drag and drop or the keyboard-accessible arrow controls, then use the **ADD LAYER** toolbar to add Heading, Text, Button, and Image layers (up to two of each) or open **Slide Background** to set the background image and overlay.
+4. Use the device preview to check Desktop, Tablet, and Phone layouts. Select a Heading, Text, Button, or Image layer directly on the canvas or the layer list, drag whole layer rows to set the front-to-back order, use the grid and safe-area guides, drag with magnetic snapping, enter precise X/Y values in the Layer Inspector, or choose an anchor preset. Each layer and device saves its position independently.
+5. Set desktop, tablet, and mobile height, content alignment, text width, CTA sizing, slider width (full or boxed), background and overlay, and navigation behavior, then save and copy the generated shortcode:
 
 ```text
 [myslider id="123"]

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="1280" height="900" rx="12" fill="#f0f2f5"/>
+
+  <!-- browser chrome -->
+  <rect width="1280" height="46" rx="12" fill="#1d2327"/><rect y="32" width="1280" height="14" fill="#1d2327"/>
+  <circle cx="28" cy="23" r="6" fill="#ff5f57"/><circle cx="50" cy="23" r="6" fill="#febc2e"/><circle cx="72" cy="23" r="6" fill="#28c840"/>
+  <text x="640" y="29" fill="#c3c4c7" font-size="14" text-anchor="middle">Edit Slider - MY Slider PRO</text>
+
+  <!-- header -->
+  <text x="40" y="94" fill="#172033" font-size="24" font-weight="700">Edit Slider</text>
+  <rect x="40" y="112" width="360" height="42" rx="5" fill="#fff" stroke="#c3c4c7"/>
+  <text x="56" y="139" fill="#172033" font-size="15">Homepage Slider</text>
+  <rect x="874" y="112" width="176" height="42" rx="5" fill="#eef0f3" stroke="#d5dae4"/>
+  <text x="962" y="139" fill="#a7adb8" font-size="14" font-weight="600" text-anchor="middle">Add New Slide</text>
+  <rect x="1066" y="112" width="174" height="42" rx="5" fill="#2271b1"/>
+  <text x="1153" y="139" fill="#fff" font-size="14" font-weight="700" text-anchor="middle">Update Slider</text>
+
+  <!-- ADD LAYER toolbar -->
+  <rect x="40" y="176" width="1200" height="46" rx="6" fill="#1d2327"/>
+  <text x="60" y="204" fill="#8a93a2" font-size="12" font-weight="700" letter-spacing="0.5">ADD LAYER</text>
+  <g font-size="13" fill="#e6eaf0">
+    <rect x="150" y="186" width="96" height="26" rx="5" fill="#2b323b"/><text x="198" y="204" text-anchor="middle">H  Heading</text>
+    <rect x="256" y="186" width="80" height="26" rx="5" fill="#2b323b"/><text x="296" y="204" text-anchor="middle">T  Text</text>
+    <rect x="346" y="186" width="86" height="26" rx="5" fill="#2b323b"/><text x="389" y="204" text-anchor="middle">Button</text>
+    <rect x="442" y="186" width="86" height="26" rx="5" fill="#2b323b"/><text x="485" y="204" text-anchor="middle">Image</text>
+    <rect x="538" y="186" width="150" height="26" rx="5" fill="#2271b1"/><text x="613" y="204" text-anchor="middle" fill="#fff" font-weight="700">Slide Background</text>
+  </g>
+
+  <!-- canvas panel -->
+  <rect x="40" y="238" width="840" height="500" rx="8" fill="#fff" stroke="#d5dae4"/>
+  <text x="64" y="272" fill="#50575e" font-size="12" font-weight="700">PREVIEW</text>
+  <rect x="130" y="256" width="86" height="28" rx="5" fill="#2271b1"/><text x="173" y="275" fill="#fff" font-size="12" text-anchor="middle">Desktop</text>
+  <rect x="222" y="256" width="74" height="28" rx="5" fill="#fff" stroke="#c3c4c7"/><text x="259" y="275" fill="#50575e" font-size="12" text-anchor="middle">Tablet</text>
+  <rect x="302" y="256" width="70" height="28" rx="5" fill="#fff" stroke="#c3c4c7"/><text x="337" y="275" fill="#50575e" font-size="12" text-anchor="middle">Phone</text>
+
+  <!-- slide canvas -->
+  <clipPath id="canvasClip"><rect x="64" y="300" width="792" height="414" rx="8"/></clipPath>
+  <g clip-path="url(#canvasClip)">
+    <rect x="64" y="300" width="792" height="414" fill="#1d5368"/>
+    <path d="M64 714L340 470L520 606L680 486L856 714H64Z" fill="#70a9ba"/>
+    <path d="M64 714L300 560L470 660L620 546L856 714H64Z" fill="#376f7f"/>
+    <circle cx="742" cy="386" r="34" fill="#ffd87d"/>
+    <!-- gradient overlay -->
+    <linearGradient id="ovl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#06121c" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#06121c" stop-opacity="0.55"/>
+    </linearGradient>
+    <rect x="64" y="300" width="792" height="414" fill="url(#ovl)"/>
+    <!-- layer tab bar overlaid -->
+    <rect x="80" y="316" width="470" height="30" rx="6" fill="#0d1b28" opacity="0.66"/>
+    <g font-size="12" fill="#cdd6e0">
+      <rect x="88" y="322" width="70" height="18" rx="4" fill="#2271b1"/><text x="123" y="335" text-anchor="middle" fill="#fff">Heading 1</text>
+      <text x="176" y="335">Text 1</text>
+      <text x="228" y="335">Heading 2</text>
+      <text x="312" y="335">Button 1</text>
+      <text x="376" y="335">Image 1</text>
+    </g>
+    <rect x="712" y="316" width="128" height="30" rx="6" fill="#0d1b28" opacity="0.66"/>
+    <text x="776" y="335" text-anchor="middle" font-size="12" fill="#cdd6e0">Hide guides</text>
+    <!-- composition -->
+    <text x="104" y="486" font-family="Arial, sans-serif" font-size="46" font-weight="700" fill="#ffffff">Find your next view</text>
+    <text x="104" y="524" font-family="Arial, sans-serif" font-size="19" fill="#e6eef5">A clean slider that stays readable on every screen.</text>
+    <rect x="104" y="556" width="150" height="46" rx="6" fill="#2271b1"/>
+    <text x="179" y="585" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Explore</text>
+    <circle cx="792" cy="620" r="30" fill="#ffffff" opacity="0.16"/>
+    <text x="792" y="628" text-anchor="middle" font-size="24" fill="#fff" opacity="0.8">b</text>
+    <!-- nav dots -->
+    <circle cx="440" cy="694" r="4" fill="#fff"/><circle cx="456" cy="694" r="4" fill="#fff" opacity="0.5"/><circle cx="472" cy="694" r="4" fill="#fff" opacity="0.5"/>
+  </g>
+
+  <!-- right inspector -->
+  <rect x="900" y="238" width="340" height="500" rx="8" fill="#fff" stroke="#d5dae4"/>
+  <text x="922" y="272" fill="#172033" font-size="16" font-weight="700">Heading 1 layer</text>
+  <rect x="1150" y="256" width="72" height="24" rx="4" fill="#eef2f6"/><text x="1186" y="273" text-anchor="middle" font-size="12" fill="#50575e">Desktop</text>
+
+  <text x="922" y="304" fill="#596579" font-size="11" font-weight="700">X POSITION</text>
+  <text x="1052" y="304" fill="#596579" font-size="11" font-weight="700">ANCHOR</text>
+  <rect x="922" y="312" width="112" height="34" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="936" y="334" font-size="13" fill="#172033">10 %</text>
+  <text x="922" y="372" fill="#596579" font-size="11" font-weight="700">Y POSITION</text>
+  <rect x="922" y="380" width="112" height="34" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="936" y="402" font-size="13" fill="#172033">62 %</text>
+  <!-- anchor 3x3 -->
+  <g fill="#fff" stroke="#c3c4c7">
+    <rect x="1052" y="312" width="30" height="30" rx="4"/><rect x="1088" y="312" width="30" height="30" rx="4"/><rect x="1124" y="312" width="30" height="30" rx="4"/>
+    <rect x="1052" y="348" width="30" height="30" rx="4"/><rect x="1088" y="348" width="30" height="30" rx="4"/><rect x="1124" y="348" width="30" height="30" rx="4"/>
+    <rect x="1052" y="384" width="30" height="30" rx="4"/><rect x="1088" y="384" width="30" height="30" rx="4" fill="#2271b1" stroke="#2271b1"/><rect x="1124" y="384" width="30" height="30" rx="4"/>
+  </g>
+
+  <line x1="922" y1="436" x2="1218" y2="436" stroke="#e6eaf0"/>
+  <text x="922" y="462" fill="#596579" font-size="11" font-weight="700">RESPONSIVE</text>
+  <rect x="922" y="472" width="16" height="16" rx="3" fill="#fff" stroke="#b9c2cf"/><text x="948" y="485" font-size="13" fill="#172033">Link size across devices</text>
+  <rect x="922" y="498" width="16" height="16" rx="3" fill="#fff" stroke="#b9c2cf"/><text x="948" y="511" font-size="13" fill="#172033">Link position across devices</text>
+
+  <line x1="922" y1="536" x2="1218" y2="536" stroke="#e6eaf0"/>
+  <text x="922" y="562" fill="#172033" font-size="14" font-weight="700">Heading style</text>
+  <text x="922" y="588" fill="#596579" font-size="11" font-weight="700">TEXT COLOR</text>
+  <text x="1052" y="588" fill="#596579" font-size="11" font-weight="700">FONT FAMILY</text>
+  <rect x="922" y="596" width="112" height="32" rx="4" fill="#fff" stroke="#c3c4c7"/><rect x="930" y="602" width="20" height="20" rx="3" fill="#ffffff" stroke="#c3c4c7"/>
+  <rect x="1052" y="596" width="166" height="32" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="1066" y="617" font-size="13" fill="#172033">Montserrat</text><text x="1200" y="617" font-size="11" fill="#697689">v</text>
+  <text x="922" y="652" fill="#596579" font-size="11" font-weight="700">SIZE</text>
+  <text x="1004" y="652" fill="#596579" font-size="11" font-weight="700">OPACITY</text>
+  <text x="1108" y="652" fill="#596579" font-size="11" font-weight="700">ALIGN</text>
+  <rect x="922" y="660" width="66" height="32" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="936" y="681" font-size="13" fill="#172033">64</text>
+  <rect x="1004" y="660" width="80" height="32" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="1018" y="681" font-size="13" fill="#172033">100</text>
+  <g fill="#fff" stroke="#c3c4c7"><rect x="1108" y="660" width="36" height="32" rx="4" fill="#2271b1" stroke="#2271b1"/><rect x="1146" y="660" width="36" height="32" rx="4"/><rect x="1184" y="660" width="34" height="32" rx="4"/></g>
+  <text x="922" y="720" fill="#596579" font-size="11" font-weight="700">LINK</text>
+  <rect x="922" y="700" width="296" height="0" />
+  <rect x="978" y="704" width="240" height="26" rx="4" fill="#fff" stroke="#c3c4c7"/><text x="990" y="722" font-size="12" fill="#98a1af">https://</text>
+
+  <!-- slides strip -->
+  <text x="40" y="770" fill="#172033" font-size="13" font-weight="700">5 slides</text>
+  <g>
+    <!-- five slide cards -->
+    <g>
+      <rect x="40" y="782" width="150" height="96" rx="6" fill="#fff" stroke="#2271b1"/>
+      <rect x="48" y="790" width="134" height="52" rx="4" fill="#3c7089"/>
+      <text x="56" y="864" font-size="12" fill="#172033" font-weight="700">Slide 1</text>
+      <text x="120" y="864" font-size="11" fill="#2271b1">Replace</text>
+    </g>
+    <g>
+      <rect x="202" y="782" width="150" height="96" rx="6" fill="#fff" stroke="#d5dae4"/>
+      <rect x="210" y="790" width="134" height="52" rx="4" fill="#5a7b8c"/>
+      <text x="218" y="864" font-size="12" fill="#172033" font-weight="700">Slide 2</text>
+      <text x="282" y="864" font-size="11" fill="#2271b1">Replace</text>
+    </g>
+    <g>
+      <rect x="364" y="782" width="150" height="96" rx="6" fill="#fff" stroke="#d5dae4"/>
+      <rect x="372" y="790" width="134" height="52" rx="4" fill="#48707f"/>
+      <text x="380" y="864" font-size="12" fill="#172033" font-weight="700">Slide 3</text>
+      <text x="444" y="864" font-size="11" fill="#2271b1">Replace</text>
+    </g>
+    <g>
+      <rect x="526" y="782" width="150" height="96" rx="6" fill="#fff" stroke="#d5dae4"/>
+      <rect x="534" y="790" width="134" height="52" rx="4" fill="#6b8a99"/>
+      <text x="542" y="864" font-size="12" fill="#172033" font-weight="700">Slide 4</text>
+      <text x="606" y="864" font-size="11" fill="#2271b1">Replace</text>
+    </g>
+    <g>
+      <rect x="688" y="782" width="150" height="96" rx="6" fill="#fff" stroke="#d5dae4"/>
+      <rect x="696" y="790" width="134" height="52" rx="4" fill="#3f6675"/>
+      <text x="704" y="864" font-size="12" fill="#172033" font-weight="700">Slide 5</text>
+      <text x="768" y="864" font-size="11" fill="#2271b1">Replace</text>
+    </g>
+  </g>
+
+  <rect x="1064" y="846" width="176" height="24" rx="12" fill="#1d2327" opacity=".72"/>
+  <text x="1152" y="862" fill="#fff" font-size="11" text-anchor="middle">Illustrative mockup</text>
+</svg>
