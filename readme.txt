@@ -4,7 +4,7 @@ Tags: slider, image slider, responsive, homepage, carousel
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Copyright: 2026 Aminudin Murad
@@ -44,6 +44,13 @@ MY Slider PRO is free and open source. If it helps you build sliders, please con
 Thank you for helping keep MY Slider PRO improving and freely available.
 
 == Changelog ==
+
+= 1.0.2 =
+
+* Link fields now include an internal page/post picker that live-searches published content; external URLs still work.
+* Added "Open link in a new tab" to the heading, text, and image links (previously button only).
+* Animation controls are always visible in the layer inspector.
+* Refreshed the slider library and editor UI: branded header, clearer buttons and cards, and a tidier Slider Settings layout.
 
 = 1.0.1 =
 
