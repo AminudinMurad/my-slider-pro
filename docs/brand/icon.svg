@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="MY Slider PRO icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b86cf"/>
+      <stop offset="1" stop-color="#135e96"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf3fb"/>
+      <stop offset="1" stop-color="#cfe4f6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tile -->
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+
+  <!-- peeking side slides (carousel depth) -->
+  <rect x="26" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+  <rect x="196" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+
+  <!-- front slide -->
+  <rect x="70" y="70" width="116" height="116" rx="16" fill="#ffffff"/>
+  <clipPath id="front"><rect x="70" y="70" width="116" height="116" rx="16"/></clipPath>
+  <g clip-path="url(#front)">
+    <rect x="70" y="70" width="116" height="116" fill="url(#sky)"/>
+    <circle cx="156" cy="104" r="14" fill="#ffcf6b"/>
+    <path d="M70 186 L110 132 L138 160 L162 128 L186 158 L186 186 Z" fill="#2271b1"/>
+    <path d="M70 186 L98 154 L120 172 L146 150 L186 186 Z" fill="#17567f"/>
+  </g>
+
+  <!-- nav chevrons -->
+  <path d="M52 128 l-12 10 l12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <path d="M204 128 l12 10 l-12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+  <!-- dots -->
+  <circle cx="108" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+  <circle cx="128" cy="210" r="7" fill="#ffffff"/>
+  <circle cx="148" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+</svg>

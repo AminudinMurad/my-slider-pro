@@ -1,16 +1,21 @@
 # MY Slider PRO
 
+<p align="center">
+  <img src="docs/brand/banner.svg" alt="MY Slider PRO — fast, responsive, accessible sliders for WordPress" width="860">
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License: GPLv3" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
+  <a href="https://github.com/sponsors/aminudinmurad"><img alt="GitHub Sponsors" src="https://img.shields.io/badge/GitHub-Sponsors-EA4AAA?logo=githubsponsors&logoColor=white"></a>
+  <a href="https://ko-fi.com/aminudinmurad"><img alt="Ko-fi" src="https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=kofi&logoColor=white"></a>
+  <a href="https://www.paypal.com/paypalme/aminudinmurad"><img alt="PayPal" src="https://img.shields.io/badge/PayPal-Support-003087?logo=paypal&logoColor=white"></a>
+</p>
+
 MY Slider PRO is a modern, open-source slider plugin for WordPress. This repository contains the plugin code and small, dependency-free local verification tools.
 
 The current build focuses on responsive sliders: a card-grid slider library, canvas-first layer editing, independent Heading/Text/Button/Image layers, per-slide backgrounds with solid or gradient overlays, Full-width or Boxed layouts, per-layer animations, and a live device preview inside WordPress.
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-
-**MY Slider PRO is free and open source under the GNU General Public License v3.0. If it helps you build sliders, please consider supporting continued development and WordPress compatibility testing:**
-
-[![GitHub Sponsors](https://img.shields.io/badge/GitHub-Sponsors-EA4AAA?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/aminudinmurad)
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/aminudinmurad)
-[![PayPal](https://img.shields.io/badge/PayPal-Support-003087?logo=paypal&logoColor=white)](https://www.paypal.com/paypalme/aminudinmurad)
+**MY Slider PRO is free and open source under the GNU General Public License v3.0.** If it helps you build sliders, please consider supporting continued development and WordPress compatibility testing.
 
 ## Overview
 
