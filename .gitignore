@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+build/
+releases/
+*.zip
+
+# Local coordination scaffold (machine-specific — not for the public repo)
+00_AI_Agent/
+.claude/
+
+# Per-seat git worktrees for concurrent work (never committed)
+worktrees/

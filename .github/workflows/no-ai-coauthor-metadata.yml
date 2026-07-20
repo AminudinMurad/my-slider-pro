@@ -1,0 +1,23 @@
+name: No AI co-author metadata
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan-commit-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reject Claude or Anthropic co-author trailers
+        run: |
+          set -euo pipefail
+
+          if git log HEAD --format=%B | grep -Eiq '^(Co-authored-by:[[:space:]]+.*(claude|anthropic)|.*<noreply@anthropic\.com>)'; then
+            echo "Claude/Anthropic co-author metadata is not allowed in this repository." >&2
+            exit 1
+          fi

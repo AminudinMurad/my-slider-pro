@@ -1,0 +1,87 @@
+<svg width="1440" height="980" viewBox="0 0 1440 980" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="980" rx="18" fill="#EEF2F6"/>
+  <rect width="1440" height="56" rx="18" fill="#1D2327"/>
+  <circle cx="31" cy="28" r="7" fill="#FF5F57"/>
+  <circle cx="58" cy="28" r="7" fill="#FFBD2E"/>
+  <circle cx="85" cy="28" r="7" fill="#28C840"/>
+  <text x="720" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#CFD6DE">Responsive Slider Editor - MY Slider PRO</text>
+
+  <text x="58" y="112" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#172033">Homepage Slider</text>
+  <rect x="58" y="138" width="965" height="52" rx="6" fill="#FFFFFF" stroke="#AAB2BE"/>
+  <text x="76" y="170" font-family="Arial, sans-serif" font-size="17" fill="#4D5870">Summer campaign slider</text>
+
+  <rect x="58" y="222" width="1018" height="678" rx="8" fill="#FFFFFF" stroke="#D7DEE8"/>
+  <rect x="1100" y="222" width="282" height="678" rx="8" fill="#FFFFFF" stroke="#D7DEE8"/>
+
+  <text x="88" y="260" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#172033">Responsive Preview</text>
+  <text x="88" y="286" font-family="Arial, sans-serif" font-size="15" fill="#637085">Switch device size with one click, then adjust mobile text position and image focus.</text>
+
+  <rect x="88" y="318" width="130" height="40" rx="5" fill="#2271B1"/>
+  <text x="153" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#FFFFFF">Desktop</text>
+  <rect x="228" y="318" width="116" height="40" rx="5" fill="#FFFFFF" stroke="#B8C0CC"/>
+  <text x="286" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155">Tablet</text>
+  <rect x="354" y="318" width="108" height="40" rx="5" fill="#FFFFFF" stroke="#B8C0CC"/>
+  <text x="408" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155">Phone</text>
+
+  <rect x="88" y="386" width="936" height="390" rx="8" fill="#DCE5EF" stroke="#C0CAD7"/>
+  <rect x="136" y="418" width="840" height="326" rx="8" fill="#FFFFFF" stroke="#98A6B8"/>
+  <clipPath id="desktopSliderClip">
+    <rect x="136" y="418" width="840" height="326" rx="8"/>
+  </clipPath>
+  <g clip-path="url(#desktopSliderClip)">
+    <rect x="136" y="418" width="840" height="326" fill="#1D5368"/>
+    <path d="M136 744L420 458L568 612L724 474L976 744H136Z" fill="#70A9BA"/>
+    <path d="M136 744L356 552L502 666L632 548L976 744H136Z" fill="#376F7F"/>
+    <circle cx="815" cy="498" r="38" fill="#FFD87D"/>
+    <rect x="136" y="418" width="840" height="326" fill="#06121C" opacity="0.36"/>
+    <text x="206" y="542" font-family="Arial, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF">Find your next view</text>
+    <text x="206" y="588" font-family="Arial, sans-serif" font-size="20" fill="#E6EEF5">A clean slider that stays readable on every screen.</text>
+    <rect x="206" y="626" width="142" height="44" rx="5" fill="#2271B1"/>
+    <text x="277" y="654" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">Explore</text>
+    <circle cx="936" cy="581" r="21" fill="#FFFFFF" opacity="0.86"/>
+    <path d="M930 569L943 581L930 593" stroke="#172033" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="176" cy="581" r="21" fill="#FFFFFF" opacity="0.86"/>
+    <path d="M182 569L169 581L182 593" stroke="#172033" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <rect x="88" y="806" width="936" height="58" rx="6" fill="#F7F9FC" stroke="#D9E1EC"/>
+  <text x="112" y="842" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#172033">Current frame:</text>
+  <text x="224" y="842" font-family="Arial, sans-serif" font-size="15" fill="#536173">Desktop 960px preview. Tablet and Phone use the same frontend responsive rules.</text>
+
+  <text x="1130" y="260" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#172033">Slider Controls</text>
+  <text x="1130" y="292" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#596579">DESKTOP HEIGHT</text>
+  <rect x="1130" y="306" width="216" height="38" rx="5" fill="#FFFFFF" stroke="#B9C2CF"/>
+  <text x="1146" y="331" font-family="Arial, sans-serif" font-size="15" fill="#172033">Tall</text>
+  <text x="1324" y="331" font-family="Arial, sans-serif" font-size="13" fill="#697689">v</text>
+
+  <text x="1130" y="376" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#596579">MOBILE HEIGHT</text>
+  <rect x="1130" y="390" width="216" height="38" rx="5" fill="#FFFFFF" stroke="#B9C2CF"/>
+  <text x="1146" y="415" font-family="Arial, sans-serif" font-size="15" fill="#172033">Standard</text>
+  <text x="1324" y="415" font-family="Arial, sans-serif" font-size="13" fill="#697689">v</text>
+
+  <text x="1130" y="460" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#596579">DESKTOP TEXT POSITION</text>
+  <rect x="1130" y="474" width="216" height="38" rx="5" fill="#FFFFFF" stroke="#B9C2CF"/>
+  <text x="1146" y="499" font-family="Arial, sans-serif" font-size="15" fill="#172033">Left middle</text>
+  <text x="1324" y="499" font-family="Arial, sans-serif" font-size="13" fill="#697689">v</text>
+
+  <text x="1130" y="544" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#596579">MOBILE TEXT POSITION</text>
+  <rect x="1130" y="558" width="216" height="38" rx="5" fill="#FFFFFF" stroke="#B9C2CF"/>
+  <text x="1146" y="583" font-family="Arial, sans-serif" font-size="15" fill="#172033">Center bottom</text>
+  <text x="1324" y="583" font-family="Arial, sans-serif" font-size="13" fill="#697689">v</text>
+
+  <text x="1130" y="628" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#596579">MOBILE IMAGE FOCUS</text>
+  <rect x="1130" y="642" width="216" height="38" rx="5" fill="#FFFFFF" stroke="#B9C2CF"/>
+  <text x="1146" y="667" font-family="Arial, sans-serif" font-size="15" fill="#172033">Center</text>
+  <text x="1324" y="667" font-family="Arial, sans-serif" font-size="13" fill="#697689">v</text>
+
+  <line x1="1130" y1="714" x2="1346" y2="714" stroke="#E0E6EF"/>
+  <rect x="1130" y="740" width="42" height="24" rx="12" fill="#2271B1"/>
+  <circle cx="1160" cy="752" r="9" fill="#FFFFFF"/>
+  <text x="1184" y="757" font-family="Arial, sans-serif" font-size="15" fill="#172033">Show arrows</text>
+  <rect x="1130" y="780" width="42" height="24" rx="12" fill="#2271B1"/>
+  <circle cx="1160" cy="792" r="9" fill="#FFFFFF"/>
+  <text x="1184" y="797" font-family="Arial, sans-serif" font-size="15" fill="#172033">Show dots</text>
+  <rect x="1130" y="820" width="42" height="24" rx="12" fill="#2271B1"/>
+  <circle cx="1160" cy="832" r="9" fill="#FFFFFF"/>
+  <text x="1184" y="837" font-family="Arial, sans-serif" font-size="15" fill="#172033">Autoplay</text>
+</svg>
