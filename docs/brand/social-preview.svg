@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-label="MY Slider PRO — fast, responsive, accessible sliders for WordPress" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b86cf"/>
+      <stop offset="1" stop-color="#0f4c7a"/>
+    </linearGradient>
+    <linearGradient id="ssky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf3fb"/>
+      <stop offset="1" stop-color="#cfe4f6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" fill="url(#sbg)"/>
+
+  <!-- hero slider graphic -->
+  <g transform="translate(0,-6)">
+    <rect x="500" y="120" width="30" height="120" rx="10" fill="#ffffff" opacity="0.18"/>
+    <rect x="750" y="120" width="30" height="120" rx="10" fill="#ffffff" opacity="0.18"/>
+    <rect x="548" y="98" width="184" height="184" rx="22" fill="#ffffff"/>
+    <clipPath id="sfront"><rect x="548" y="98" width="184" height="184" rx="22"/></clipPath>
+    <g clip-path="url(#sfront)">
+      <rect x="548" y="98" width="184" height="184" fill="url(#ssky)"/>
+      <circle cx="686" cy="150" r="22" fill="#ffcf6b"/>
+      <path d="M548 282 L612 194 L656 240 L694 190 L732 236 L732 282 Z" fill="#2271b1"/>
+      <path d="M548 282 L594 236 L630 264 L672 226 L732 282 Z" fill="#17567f"/>
+    </g>
+    <path d="M476 168 l-16 12 l16 12" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+    <path d="M804 168 l16 12 l-16 12" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+    <circle cx="612" cy="312" r="7" fill="#ffffff" opacity="0.5"/>
+    <circle cx="640" cy="312" r="8" fill="#ffffff"/>
+    <circle cx="668" cy="312" r="7" fill="#ffffff" opacity="0.5"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="640" y="420" text-anchor="middle" fill="#ffffff" font-size="82" font-weight="800" letter-spacing="0.5">MY Slider PRO</text>
+  <text x="640" y="466" text-anchor="middle" fill="#d6e8f7" font-size="28">Fast, responsive, accessible sliders for WordPress.</text>
+
+  <!-- chips -->
+  <g font-size="19" fill="#ffffff">
+    <rect x="430" y="498" width="150" height="40" rx="20" fill="#ffffff" opacity="0.14"/><text x="505" y="524" text-anchor="middle">Open source</text>
+    <rect x="592" y="498" width="110" height="40" rx="20" fill="#ffffff" opacity="0.14"/><text x="647" y="524" text-anchor="middle">GPL-3.0</text>
+    <rect x="714" y="498" width="196" height="40" rx="20" fill="#ffffff" opacity="0.14"/><text x="812" y="524" text-anchor="middle">No dependencies</text>
+  </g>
+
+  <text x="640" y="596" text-anchor="middle" fill="#a9cdeb" font-size="18">github.com/AminudinMurad/my-slider-pro</text>
+</svg>

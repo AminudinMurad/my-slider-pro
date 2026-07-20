@@ -69,6 +69,24 @@ final class AdminPage {
 	}
 
 	/**
+	 * Base64-encoded monochrome menu icon (WordPress recolors it to the admin scheme).
+	 *
+	 * @return string Data URI suitable for add_menu_page().
+	 */
+	private static function menu_icon(): string {
+		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
+			. '<path fill="#a7aaad" fill-rule="evenodd" d="M3.5 4.5h13a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Zm.5 1.5v6h12v-6H4Z"/>'
+			. '<circle fill="#a7aaad" cx="13.3" cy="7.7" r="1.15"/>'
+			. '<path fill="#a7aaad" d="M4 12 L7 8.2 L9 10.2 L11.2 7.7 L14 12 Z"/>'
+			. '<circle fill="#a7aaad" cx="8.2" cy="16.2" r="0.95"/>'
+			. '<circle fill="#a7aaad" cx="10" cy="16.2" r="0.95"/>'
+			. '<circle fill="#a7aaad" cx="11.8" cy="16.2" r="0.95"/>'
+			. '</svg>';
+
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
+	}
+
+	/**
 	 * Register the plugin menu and slider editor submenu.
 	 *
 	 * @return void
@@ -101,7 +119,7 @@ final class AdminPage {
 			self::CAPABILITY,
 			self::PAGE_SLUG,
 			array( self::class, 'render_overview' ),
-			'dashicons-slides',
+			self::menu_icon(),
 			58
 		);
 

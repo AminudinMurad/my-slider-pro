@@ -4,7 +4,7 @@ Tags: slider, image slider, responsive, homepage, carousel
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Copyright: 2026 Aminudin Murad
@@ -44,6 +44,10 @@ MY Slider PRO is free and open source. If it helps you build sliders, please con
 Thank you for helping keep MY Slider PRO improving and freely available.
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Custom MY Slider PRO admin menu icon in place of the generic dashicon.
 
 = 1.0.0 =
 
