@@ -9,7 +9,7 @@
   <!-- header -->
   <text x="40" y="96" fill="#172033" font-size="26" font-weight="700">Sliders</text>
   <text x="40" y="122" fill="#667085" font-size="14">Create responsive image sliders from your WordPress Media Library. Export a slider as a portable ZIP, or import one.</text>
-  <rect x="1088" y="80" width="152" height="24" rx="12" fill="#eef2f6"/><text x="1164" y="97" text-anchor="middle" font-size="12" fill="#50575e">MY Slider PRO v1.0.2</text>
+  <rect x="1088" y="80" width="152" height="24" rx="12" fill="#eef2f6"/><text x="1164" y="97" text-anchor="middle" font-size="12" fill="#50575e">MY Slider PRO v1.0.3</text>
 
   <!-- action bar -->
   <text x="40" y="166" fill="#172033" font-size="14" font-weight="700">All sliders <tspan fill="#8a93a2">(3)</tspan></text>
@@ -69,7 +69,7 @@
   <rect x="40" y="548" width="1200" height="150" rx="8" fill="#fff" stroke="#d5dae4"/>
   <text x="64" y="588" fill="#172033" font-size="18" font-weight="700">MY Slider PRO</text>
   <text x="64" y="614" fill="#50575e" font-size="14">Fast, responsive, accessible sliders for WordPress.</text>
-  <text x="64" y="644" fill="#8a93a2" font-size="13">v1.0.2 · open source · GPL-3.0 · © 2026 Aminudin Murad</text>
+  <text x="64" y="644" fill="#8a93a2" font-size="13">v1.0.3 · open source · GPL-3.0 · © 2026 Aminudin Murad</text>
   <text x="840" y="588" fill="#596579" font-size="12" font-weight="700">SUPPORT OPEN-SOURCE DEVELOPMENT</text>
   <g font-size="13" fill="#334155">
     <rect x="840" y="606" width="88" height="34" rx="17" fill="#fff" stroke="#c3c4c7"/><text x="884" y="628" text-anchor="middle">GitHub</text>

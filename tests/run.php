@@ -50,15 +50,15 @@ require dirname( __DIR__ ) . '/my-slider-pro.php';
 global $mySlider_test_state;
 
 mySlider_test_assert( defined( 'MY_SLIDER_PRO_VERSION' ), 'The version constant is missing.' );
-mySlider_test_assert( '1.0.2' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.2.' );
+mySlider_test_assert( '1.0.3' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.3.' );
 mySlider_test_assert( 'MY Slider PRO' === MY_SLIDER_PRO_NAME, 'The plugin name constant is incorrect.' );
 
 $plugin_source  = (string) file_get_contents( dirname( __DIR__ ) . '/my-slider-pro.php' );
 $readme_source  = (string) file_get_contents( dirname( __DIR__ ) . '/readme.txt' );
 $license_source = (string) file_get_contents( dirname( __DIR__ ) . '/LICENSE' );
 
-mySlider_test_contains( 'Version:           1.0.2', $plugin_source, 'The plugin header version is incorrect.' );
-mySlider_test_contains( 'Stable tag: 1.0.2', $readme_source, 'The readme stable tag is incorrect.' );
+mySlider_test_contains( 'Version:           1.0.3', $plugin_source, 'The plugin header version is incorrect.' );
+mySlider_test_contains( 'Stable tag: 1.0.3', $readme_source, 'The readme stable tag is incorrect.' );
 mySlider_test_contains( 'License:           GPLv3', $plugin_source, 'The plugin header must declare the GPLv3 license.' );
 mySlider_test_contains( 'License: GPLv3', $readme_source, 'The readme must declare the GPLv3 license.' );
 mySlider_test_assert( 0 === strpos( ltrim( $license_source ), 'GNU GENERAL PUBLIC LICENSE' ), 'The GPLv3 license file is incorrect.' );
@@ -364,6 +364,8 @@ mySlider_test_assert( false !== strpos( $menu_icon_svg, '<svg' ) && false !== st
 ob_start();
 call_user_func( $menu_page['callback'] );
 $overview_output = (string) ob_get_clean();
+mySlider_test_contains( 'psp-page-header psp-hero', $overview_output, 'The overview must lead with the branded gradient hero.' );
+mySlider_test_contains( 'psp-hero-glyph', $overview_output, 'The overview hero must include the brand glyph.' );
 mySlider_test_contains( 'psp-slider-cards', $overview_output, 'The overview must render sliders as a card grid.' );
 mySlider_test_contains( 'psp-slider-card', $overview_output, 'Each slider must render as a card.' );
 mySlider_test_assert( false === strpos( $overview_output, 'psp-slider-table' ), 'The overview must no longer render the old table layout.' );
@@ -556,6 +558,10 @@ mySlider_test_contains( '[heading_target]', $editor_output, 'The hidden slide st
 mySlider_test_contains( '[description_target]', $editor_output, 'The hidden slide store must persist the description new-tab flag.' );
 mySlider_test_contains( '[image_target]', $editor_output, 'The hidden slide store must persist the image new-tab flag.' );
 mySlider_test_contains( 'psp-accordion-static', $editor_output, 'The Animation section must render as a static, always-visible section.' );
+mySlider_test_contains( 'psp-about-card', $editor_output, 'The editor must render the About / support card at the bottom, like the overview.' );
+mySlider_test_contains( 'psp-editor-header psp-hero', $editor_output, 'The editor must lead with the same branded gradient hero as the overview.' );
+mySlider_test_contains( 'psp-hero-glyph', $editor_output, 'The editor hero must include the brand glyph.' );
+mySlider_test_assert( strpos( $editor_output, 'psp-back-link' ) < strpos( $editor_output, 'psp-title-row' ), 'The back link must sit above the editor hero title.' );
 mySlider_test_assert( false === strpos( $editor_output, 'data-psp-collapsible' ), 'No collapsed accordions may remain in the layer inspector.' );
 mySlider_test_contains( 'data-psp-style-key="image_layer_url"', $editor_output, 'The layer inspector must expose the image layer URL field.' );
 mySlider_test_contains( 'data-psp-slide-key="background_position"', $editor_output, 'The Background settings panel must expose the position control.' );
@@ -980,4 +986,4 @@ mySlider_test_contains( 'ResizeObserver', $frontend_js, 'The public slider must 
 mySlider_test_contains( 'prefers-reduced-motion', $frontend_js, 'Autoplay must respect reduced-motion preferences.' );
 mySlider_test_contains( 'focusin', $frontend_js, 'Autoplay must pause while a user interacts with controls.' );
 
-echo 'MY Slider PRO v1.0.2 slider behavior tests passed' . PHP_EOL;
+echo 'MY Slider PRO v1.0.3 slider behavior tests passed' . PHP_EOL;

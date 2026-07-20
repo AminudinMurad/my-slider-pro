@@ -35,8 +35,8 @@ image focal point while keeping WordPress responsive sources and alternative tex
 - **Front-to-back layer sorting** — drag whole layer rows to control the public z-index order for each slide.
 - **Repeatable layers with sensible caps** — add up to two of each layer type per slide (Heading, Text, Button, Image), each numbered (Heading 1, Heading 2, …) with its own Desktop/Tablet/Phone position, styling, opacity, animation, and optional link. Add New Slide and the per-type Add layer buttons grey out at their caps (up to 5 slides per slider).
 - **Per-layer opacity** — bounded 10–100% opacity controls for every layer, reflected live in the editor and on the public slider.
-- **Layer links** — add optional URLs to any Heading, Text, Button, or Image layer.
-- **Per-layer animation** — choose none, fade, slide, or zoom animations with layer-specific delay, duration, and easing controls.
+- **Layer links with an internal picker** — add an optional URL to any Heading, Text, Button, or Image layer. A built-in picker live-searches your published pages and posts and inserts the permalink, or paste any external URL. Each link can open in the same tab or a new one.
+- **Per-layer animation** — choose none, fade, slide, or zoom animations with layer-specific delay, duration, and easing controls, always visible in the Layer Inspector.
 - **Exact font families** — use theme default, Poppins, Montserrat, or Inter with matching font loading in the editor and frontend.
 - **Per-slide styling** — style each layer independently with its own color, typography, size, alignment, and responsive position, plus CTA text/background colors, text size, corner radius, padding, image-layer width, opacity, and a matching live preview.
 - **Per-slide backgrounds and overlays** — set a replaceable background image (from a panel control or the editor toolbar), fill mode (cover, fill, fit, or actual size), nine-point position, an optional grayscale filter, and a background overlay — None, Solid, or Gradient with colour, second colour, opacity, and direction — all reflected live in the editor and on the public slider.
@@ -50,6 +50,7 @@ image focal point while keeping WordPress responsive sources and alternative tex
 - **One shortcode** — `[myslider id="123"]`, with **one-click copy** from the admin and a screen-reader-friendly confirmation.
 - **Container-responsive** — layouts adapt to narrow theme and page-builder regions, not just the viewport.
 - **Safe multi-author use** — slider isolation, per-attachment access checks, capability + nonce protection, and bounded queries.
+- **Consistent, branded admin** — the slider library and visual editor share one look: a branded gradient header, a single button system, and a matching support footer across both screens.
 - **No dependencies** — WordPress-native code with a small first-party autoloader; no build step or third-party runtime packages.
 
 ## Preview

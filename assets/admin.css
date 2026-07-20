@@ -20,15 +20,177 @@
 	box-sizing: border-box;
 }
 
-.my-slider-pro-admin .button-primary {
+/* WP core's .wp-core-ui .button .dashicons sets line-height: 1.9 and
+   vertical-align: top, which drops icon glyphs ~7px inside our tight icon
+   boxes. Same specificity, later in the cascade, so this wins everywhere. */
+.my-slider-pro-admin .button .dashicons {
+	line-height: 1;
+	vertical-align: middle;
+}
+
+/* ===== Shared button system (library + editor) =====
+   One spec for every WP .button inside the plugin so both pages match and
+   neither WP core nor admin-theme styles leak through. Exceptions: the dark
+   canvas toolbar (device switcher below), card text-link actions, and
+   .button-link / .button-link-delete quiet links. */
+.my-slider-pro-admin .button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	min-height: 34px;
+	margin: 0;
+	padding: 4px 13px;
+	border: 1px solid var(--psp-line);
+	border-radius: 5px;
+	background: #fff;
+	color: var(--psp-ink);
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+	box-shadow: none;
+}
+
+.my-slider-pro-admin .button:hover,
+.my-slider-pro-admin .button:focus {
+	border-color: var(--psp-blue);
+	background: var(--psp-soft);
+	color: var(--psp-blue-dark);
+}
+
+.my-slider-pro-admin .button:focus-visible {
+	box-shadow: 0 0 0 1px var(--psp-blue);
+	outline: none;
+}
+
+.my-slider-pro-admin .button .dashicons {
+	color: var(--psp-blue);
+}
+
+.my-slider-pro-admin .button.button-small {
+	min-height: 30px;
+	padding: 2px 10px;
+	font-size: 12px;
+}
+
+/* !important matches the admin color-scheme sheet, which also uses it. */
+.my-slider-pro-admin .button:disabled,
+.my-slider-pro-admin .button[disabled] {
+	border-color: var(--psp-line) !important;
+	background: #f6f7f7 !important;
+	color: #a7aaad !important;
+	cursor: default;
+}
+
+.my-slider-pro-admin .button:disabled .dashicons,
+.my-slider-pro-admin .button[disabled] .dashicons {
+	color: #a7aaad;
+}
+
+.my-slider-pro-admin .button-primary,
+.my-slider-pro-admin .button.button-primary {
 	border-color: var(--psp-blue);
 	background: var(--psp-blue);
+	color: #fff;
+	font-weight: 600;
 }
 
 .my-slider-pro-admin .button-primary:hover,
-.my-slider-pro-admin .button-primary:focus {
+.my-slider-pro-admin .button-primary:focus,
+.my-slider-pro-admin .button.button-primary:hover,
+.my-slider-pro-admin .button.button-primary:focus {
 	border-color: var(--psp-blue-dark);
 	background: var(--psp-blue-dark);
+	color: #fff;
+}
+
+.my-slider-pro-admin .button-primary .dashicons {
+	color: #fff;
+}
+
+/* !important matches the admin color-scheme sheet, which also uses it. */
+.my-slider-pro-admin .button-primary:disabled,
+.my-slider-pro-admin .button-primary[disabled],
+.my-slider-pro-admin .button.button-primary:disabled,
+.my-slider-pro-admin .button.button-primary[disabled] {
+	border-color: var(--psp-line) !important;
+	background: #f6f7f7 !important;
+	color: #a7aaad !important;
+}
+
+/* Quiet text links (Cancel, per-slide Replace, move arrows). */
+.my-slider-pro-admin .button-link {
+	border: 0;
+	border-radius: 0;
+	background: none;
+	color: var(--psp-blue);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.my-slider-pro-admin .button-link:hover,
+.my-slider-pro-admin .button-link:focus {
+	background: none;
+	color: var(--psp-blue-dark);
+	text-decoration: underline;
+}
+
+/* Destructive controls read red on both pages. */
+.my-slider-pro-admin .button-link-delete {
+	border: 0;
+	border-radius: 3px;
+	padding: 2px 6px;
+	background: none;
+	color: #b32d2e;
+	cursor: pointer;
+}
+
+.my-slider-pro-admin .button-link-delete:hover,
+.my-slider-pro-admin .button-link-delete:focus {
+	background: #fcf0f1;
+	color: #8a2424;
+}
+
+.my-slider-pro-admin .button.button-link-delete {
+	border: 1px solid #f0c2c3;
+	background: #fff;
+	color: #b32d2e;
+}
+
+.my-slider-pro-admin .button.button-link-delete:hover,
+.my-slider-pro-admin .button.button-link-delete:focus {
+	border-color: #d63638;
+	background: #fcf0f1;
+	color: #8a2424;
+}
+
+/* Exception: the device switcher lives on the dark canvas toolbar and keeps
+   the dark chrome of its sibling layer tools instead of the light spec. */
+.my-slider-pro-admin .button.psp-device-button {
+	border: 1px solid rgba(148, 163, 184, 0.38);
+	border-radius: 6px;
+	background: #1f2937;
+	color: #f8fafc;
+	font-weight: 600;
+}
+
+.my-slider-pro-admin .button.psp-device-button:hover,
+.my-slider-pro-admin .button.psp-device-button:focus {
+	border-color: #60a5fa;
+	background: #263449;
+	color: #ffffff;
+}
+
+.my-slider-pro-admin .button.psp-device-button .dashicons {
+	color: currentColor;
+}
+
+.my-slider-pro-admin .button.psp-device-button.is-active,
+.my-slider-pro-admin .button.psp-device-button.is-active:hover,
+.my-slider-pro-admin .button.psp-device-button.is-active:focus {
+	border-color: var(--psp-blue);
+	background: var(--psp-blue);
+	color: #ffffff;
 }
 
 .psp-page-header {
@@ -78,6 +240,37 @@
 
 .psp-hero .psp-version-inline {
 	background: rgba(255, 255, 255, 0.18);
+	color: #fff;
+}
+
+/* Editor hero: same brand band as the overview, slightly more compact. */
+.psp-editor .psp-hero {
+	margin: 18px 0 16px;
+	padding: 14px 20px;
+	gap: 14px;
+}
+
+.psp-editor .psp-hero-glyph {
+	width: 44px;
+	height: 44px;
+}
+
+.psp-hero .psp-back-link {
+	display: inline-block;
+	margin-bottom: 2px;
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.psp-hero .psp-back-link:hover,
+.psp-hero .psp-back-link:focus {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.psp-editor .psp-hero h1 {
+	margin: 0;
 	color: #fff;
 }
 
@@ -173,16 +366,21 @@
 	color: var(--psp-ink);
 }
 
-/* Solid primary Add New Slider (mockup parity). */
+/* Solid primary Add New Slider — same metrics as the shared primary spec. */
 .my-slider-pro-admin .psp-list-actions .page-title-action {
 	top: 0;
+	display: inline-flex;
+	align-items: center;
+	min-height: 34px;
 	margin: 0;
-	padding: 5px 14px;
+	padding: 4px 13px;
 	border: 1px solid var(--psp-blue);
 	border-radius: 5px;
 	background: var(--psp-blue);
 	color: #fff;
+	font-size: 13px;
 	font-weight: 600;
+	line-height: 1.4;
 }
 
 .my-slider-pro-admin .psp-list-actions .page-title-action:hover,
@@ -204,46 +402,7 @@
 	gap: 6px;
 }
 
-/* Unified secondary controls (Choose file / Import / Settings) — one quiet
-   style so only Add New Slider reads as the primary action. */
-.my-slider-pro-admin .psp-list-actions .button {
-	display: inline-flex;
-	align-items: center;
-	gap: 5px;
-	min-height: 34px;
-	margin: 0;
-	padding: 4px 13px;
-	border: 1px solid var(--psp-line);
-	border-radius: 5px;
-	background: #fff;
-	color: var(--psp-ink);
-	font-weight: 500;
-	box-shadow: none;
-}
-
-.my-slider-pro-admin .psp-list-actions .button .dashicons {
-	color: var(--psp-blue);
-}
-
-.my-slider-pro-admin .psp-list-actions .button:hover,
-.my-slider-pro-admin .psp-list-actions .button:focus {
-	border-color: var(--psp-blue);
-	background: var(--psp-soft);
-	color: var(--psp-blue-dark);
-}
-
-.my-slider-pro-admin .psp-list-actions .button:disabled,
-.my-slider-pro-admin .psp-list-actions .button[disabled] {
-	border-color: var(--psp-line);
-	background: #f6f7f7;
-	color: #a7aaad;
-	cursor: default;
-}
-
-.my-slider-pro-admin .psp-list-actions .button:disabled .dashicons,
-.my-slider-pro-admin .psp-list-actions .button[disabled] .dashicons {
-	color: #a7aaad;
-}
+/* Choose file / Import / Settings inherit the shared plugin button spec. */
 
 .psp-slider-cards {
 	display: grid;
@@ -858,9 +1017,6 @@
 	display: block;
 }
 
-.psp-bg-image-meta {
-	min-width: 0;
-}
 
 /* Flex row so the icon centers on the label instead of drifting off the
    text baseline (same pattern as .psp-import-choose / .psp-open-settings). */
@@ -3754,6 +3910,16 @@ body.psp-modal-open {
 
 .psp-editor .psp-slider-items-panel > .psp-panel-heading {
 	padding: 14px 16px;
+	/* The name field carries a label above it, so bottom-align the row: the
+	   input and the action buttons share one baseline instead of the input
+	   sinking below the vertically-centered actions. */
+	align-items: flex-end;
+}
+
+/* Match the shared 34px button height so the bottom-aligned row reads as
+   one line (the compact 30px input otherwise sits visibly lower). */
+.psp-editor .psp-title-field .psp-title-input {
+	min-height: 34px;
 }
 
 .psp-editor .psp-panel h2 {

@@ -380,36 +380,7 @@ final class AdminPage {
 		<div class="wrap my-slider-pro-admin">
 			<?php self::render_notice(); ?>
 			<header class="psp-page-header psp-hero">
-				<span class="psp-hero-glyph" aria-hidden="true">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" focusable="false">
-						<defs>
-							<linearGradient id="psp-hbg" x1="0" y1="0" x2="1" y2="1">
-								<stop offset="0" stop-color="#2b86cf"/>
-								<stop offset="1" stop-color="#135e96"/>
-							</linearGradient>
-							<linearGradient id="psp-hsky" x1="0" y1="0" x2="0" y2="1">
-								<stop offset="0" stop-color="#eaf3fb"/>
-								<stop offset="1" stop-color="#cfe4f6"/>
-							</linearGradient>
-							<clipPath id="psp-hfront"><rect x="70" y="70" width="116" height="116" rx="16"/></clipPath>
-						</defs>
-						<rect width="256" height="256" rx="56" fill="url(#psp-hbg)"/>
-						<rect x="26" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
-						<rect x="196" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
-						<rect x="70" y="70" width="116" height="116" rx="16" fill="#ffffff"/>
-						<g clip-path="url(#psp-hfront)">
-							<rect x="70" y="70" width="116" height="116" fill="url(#psp-hsky)"/>
-							<circle cx="156" cy="104" r="14" fill="#ffcf6b"/>
-							<path d="M70 186 L110 132 L138 160 L162 128 L186 158 L186 186 Z" fill="#2271b1"/>
-							<path d="M70 186 L98 154 L120 172 L146 150 L186 186 Z" fill="#17567f"/>
-						</g>
-						<path d="M52 128 l-12 10 l12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-						<path d="M204 128 l12 10 l-12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-						<circle cx="108" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
-						<circle cx="128" cy="210" r="7" fill="#ffffff"/>
-						<circle cx="148" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
-					</svg>
-				</span>
+				<?php self::render_hero_glyph(); ?>
 				<div class="psp-hero-copy">
 					<div class="psp-title-row">
 						<h1 id="psp-page-title"><?php echo esc_html__( 'Sliders', 'my-slider-pro' ); ?></h1>
@@ -528,12 +499,15 @@ final class AdminPage {
 		$title     = $slider ? get_the_title( $slider_id ) : '';
 		?>
 		<div class="wrap my-slider-pro-admin psp-editor">
-			<header class="psp-editor-header">
-				<div>
+			<header class="psp-editor-header psp-hero">
+				<?php self::render_hero_glyph(); ?>
+				<div class="psp-hero-copy">
 					<a class="psp-back-link" href="<?php echo esc_url( self::get_overview_url() ); ?>">&larr; <?php echo esc_html__( 'All sliders', 'my-slider-pro' ); ?></a>
-					<h1><?php echo $slider ? esc_html__( 'Edit Slider', 'my-slider-pro' ) : esc_html__( 'Add New Slider', 'my-slider-pro' ); ?></h1>
+					<div class="psp-title-row">
+						<h1><?php echo $slider ? esc_html__( 'Edit Slider', 'my-slider-pro' ) : esc_html__( 'Add New Slider', 'my-slider-pro' ); ?></h1>
+						<span class="psp-version-inline"><?php echo esc_html( MY_SLIDER_PRO_NAME . ' v' . MY_SLIDER_PRO_VERSION ); ?></span>
+					</div>
 				</div>
-				<span class="psp-version-inline"><?php echo esc_html( MY_SLIDER_PRO_NAME . ' v' . MY_SLIDER_PRO_VERSION ); ?></span>
 			</header>
 
 			<form class="psp-editor-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
@@ -635,11 +609,9 @@ final class AdminPage {
 									<p class="psp-group-label"><span class="dashicons dashicons-format-image" aria-hidden="true"></span><?php echo esc_html__( 'Image', 'my-slider-pro' ); ?></p>
 									<div class="psp-bg-image-row">
 										<span class="psp-bg-thumb"><img id="psp-bg-thumb-img" src="" alt="" /><span class="psp-bg-thumb-empty dashicons dashicons-format-image" aria-hidden="true"></span></span>
-										<div class="psp-bg-image-meta">
-											<button type="button" class="button psp-replace-background"><span class="dashicons dashicons-update" aria-hidden="true"></span><?php echo esc_html__( 'Replace background', 'my-slider-pro' ); ?></button>
-											<p class="psp-bg-thumb-name" id="psp-bg-thumb-name"></p>
-										</div>
+										<button type="button" class="button psp-replace-background"><span class="dashicons dashicons-update" aria-hidden="true"></span><?php echo esc_html__( 'Replace background', 'my-slider-pro' ); ?></button>
 									</div>
+									<p class="psp-bg-thumb-name" id="psp-bg-thumb-name"></p>
 									<div class="psp-layer-slide-section">
 										<div class="psp-bg-fill-row">
 											<label class="psp-seg-field"><span><?php echo esc_html__( 'Fill mode', 'my-slider-pro' ); ?></span><?php self::render_fill_segment(); ?></label>
@@ -772,6 +744,7 @@ final class AdminPage {
 					</aside>
 				</div>
 			</form>
+			<?php self::render_about_card(); ?>
 		</div>
 		<?php
 	}
@@ -1582,6 +1555,46 @@ final class AdminPage {
 	 * @param string $style_key Hidden style key managed by the layer inspector.
 	 * @return void
 	 */
+	/**
+	 * Render the brand glyph used by the gradient hero headers.
+	 *
+	 * @return void
+	 */
+	private static function render_hero_glyph(): void {
+		?>
+		<span class="psp-hero-glyph" aria-hidden="true">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" focusable="false">
+				<defs>
+					<linearGradient id="psp-hbg" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0" stop-color="#2b86cf"/>
+						<stop offset="1" stop-color="#135e96"/>
+					</linearGradient>
+					<linearGradient id="psp-hsky" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0" stop-color="#eaf3fb"/>
+						<stop offset="1" stop-color="#cfe4f6"/>
+					</linearGradient>
+					<clipPath id="psp-hfront"><rect x="70" y="70" width="116" height="116" rx="16"/></clipPath>
+				</defs>
+				<rect width="256" height="256" rx="56" fill="url(#psp-hbg)"/>
+				<rect x="26" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+				<rect x="196" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+				<rect x="70" y="70" width="116" height="116" rx="16" fill="#ffffff"/>
+				<g clip-path="url(#psp-hfront)">
+					<rect x="70" y="70" width="116" height="116" fill="url(#psp-hsky)"/>
+					<circle cx="156" cy="104" r="14" fill="#ffcf6b"/>
+					<path d="M70 186 L110 132 L138 160 L162 128 L186 158 L186 186 Z" fill="#2271b1"/>
+					<path d="M70 186 L98 154 L120 172 L146 150 L186 186 Z" fill="#17567f"/>
+				</g>
+				<path d="M52 128 l-12 10 l12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+				<path d="M204 128 l12 10 l-12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+				<circle cx="108" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+				<circle cx="128" cy="210" r="7" fill="#ffffff"/>
+				<circle cx="148" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+			</svg>
+		</span>
+		<?php
+	}
+
 	/**
 	 * Render an inspector link field: a free URL input plus a button that
 	 * opens the internal page/post search picker.

@@ -1,20 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 900" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
-  <rect width="1280" height="900" rx="12" fill="#f0f2f5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 948" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect width="1280" height="948" rx="12" fill="#f0f2f5"/>
 
   <!-- browser chrome -->
   <rect width="1280" height="46" rx="12" fill="#1d2327"/><rect y="32" width="1280" height="14" fill="#1d2327"/>
   <circle cx="28" cy="23" r="6" fill="#ff5f57"/><circle cx="50" cy="23" r="6" fill="#febc2e"/><circle cx="72" cy="23" r="6" fill="#28c840"/>
   <text x="640" y="29" fill="#c3c4c7" font-size="14" text-anchor="middle">Edit Slider - MY Slider PRO</text>
 
-  <!-- header -->
-  <text x="40" y="94" fill="#172033" font-size="24" font-weight="700">Edit Slider</text>
-  <rect x="40" y="112" width="360" height="42" rx="5" fill="#fff" stroke="#c3c4c7"/>
-  <text x="56" y="139" fill="#172033" font-size="15">Homepage Slider</text>
-  <rect x="874" y="112" width="176" height="42" rx="5" fill="#eef0f3" stroke="#d5dae4"/>
-  <text x="962" y="139" fill="#a7adb8" font-size="14" font-weight="600" text-anchor="middle">Add New Slide</text>
-  <rect x="1066" y="112" width="174" height="42" rx="5" fill="#2271b1"/>
-  <text x="1153" y="139" fill="#fff" font-size="14" font-weight="700" text-anchor="middle">Update Slider</text>
+  <!-- branded gradient hero header -->
+  <defs>
+    <linearGradient id="editHero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b86cf"/><stop offset="1" stop-color="#135e96"/>
+    </linearGradient>
+  </defs>
+  <rect x="40" y="56" width="1200" height="64" rx="12" fill="url(#editHero)"/>
+  <rect x="60" y="72" width="44" height="44" rx="11" fill="#1c6bb0"/>
+  <rect x="72" y="82" width="24" height="24" rx="5" fill="#ffffff"/>
+  <circle cx="90" cy="90" r="4" fill="#ffcf6b"/>
+  <path d="M76 106 L84 96 L90 101 L96 94 L102 106 Z" fill="#2271b1"/>
+  <text x="120" y="82" fill="#ffffff" font-size="11" opacity="0.85">&#8592; All sliders</text>
+  <text x="120" y="106" fill="#ffffff" font-size="22" font-weight="700">Edit Slider</text>
+  <rect x="1076" y="76" width="150" height="24" rx="12" fill="#ffffff" opacity="0.18"/>
+  <text x="1151" y="93" fill="#ffffff" font-size="12" text-anchor="middle">MY Slider PRO v1.0.3</text>
 
+  <!-- name + actions row -->
+  <text x="40" y="150" fill="#172033" font-size="12" font-weight="700">Slider Name</text>
+  <rect x="40" y="158" width="360" height="34" rx="5" fill="#fff" stroke="#c3c4c7"/>
+  <text x="56" y="180" fill="#172033" font-size="14">Homepage Slider</text>
+  <text x="560" y="180" fill="#50575e" font-size="13">Shortcode</text>
+  <rect x="636" y="162" width="150" height="26" rx="5" fill="#f1f3f6"/><text x="648" y="180" font-size="12" fill="#172033" font-family="ui-monospace,Menlo,Consolas,monospace">[myslider id="12"]</text>
+  <rect x="800" y="158" width="120" height="34" rx="5" fill="#eef0f3" stroke="#d5dae4"/><text x="860" y="180" fill="#a7adb8" font-size="13" font-weight="600" text-anchor="middle">Add New Slide</text>
+  <rect x="936" y="158" width="130" height="34" rx="5" fill="#2271b1"/><text x="1001" y="180" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">Update Slider</text>
+  <text x="1096" y="180" fill="#2271b1" font-size="13">Cancel</text>
+
+  <g transform="translate(0,48)">
   <!-- ADD LAYER toolbar -->
   <rect x="40" y="176" width="1200" height="46" rx="6" fill="#1d2327"/>
   <text x="60" y="204" fill="#8a93a2" font-size="12" font-weight="700" letter-spacing="0.5">ADD LAYER</text>
@@ -144,4 +162,5 @@
 
   <rect x="1064" y="846" width="176" height="24" rx="12" fill="#1d2327" opacity=".72"/>
   <text x="1152" y="862" fill="#fff" font-size="11" text-anchor="middle">Illustrative mockup</text>
+  </g>
 </svg>
