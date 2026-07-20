@@ -3050,9 +3050,17 @@
 	} );
 
 	// Background settings panel + Add Layer toolbar: set/replace the active
-	// slide's single background image via the Media Library.
+	// slide's single background image via the Media Library. On a brand-new
+	// slider there is no slide yet, so fall back to the add-images picker —
+	// the chosen image becomes the first slide (its background).
 	$layerWorkspace.on( 'click', '.psp-replace-background, .psp-set-slide-background', function () {
-		openReplaceImage( activeSlideItem() );
+		var $active = activeSlideItem();
+
+		if ( ! $active.length ) {
+			$addButton.trigger( 'click' );
+			return;
+		}
+		openReplaceImage( $active );
 	} );
 
 	$list.on( 'click', '.psp-remove-image', function () {
