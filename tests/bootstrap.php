@@ -243,6 +243,14 @@ function admin_url( string $path = '' ): string {
 	return 'https://example.test/wp-admin/' . ltrim( $path, '/' );
 }
 
+function rest_url( string $path = '' ): string {
+	return 'https://example.test/wp-json/' . ltrim( $path, '/' );
+}
+
+function wp_create_nonce( $action = -1 ): string {
+	return 'test-nonce-' . md5( (string) $action );
+}
+
 function add_query_arg( $key, $value = null, $url = null ): string {
 	if ( is_array( $key ) ) {
 		$args = $key;

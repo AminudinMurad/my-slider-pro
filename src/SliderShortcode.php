@@ -257,7 +257,7 @@ final class SliderShortcode {
 								<?php if ( '' !== $item['content']['image_layer_url'] ) : ?>
 									<div class="my-slider-pro-image-layer my-slider-pro-layer" style="<?php echo esc_attr( $image_layer_style ); ?>">
 										<?php if ( '' !== $item['content']['image_link_url'] ) : ?>
-											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['image_link_url'] ); ?>">
+											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['image_link_url'] ); ?>"<?php echo ! empty( $item['content']['image_target'] ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 												<img src="<?php echo esc_url( $item['content']['image_layer_url'] ); ?>" alt="<?php echo esc_attr( $item['content']['image_layer_alt'] ); ?>" loading="lazy" decoding="async" />
 											</a>
 										<?php else : ?>
@@ -268,7 +268,7 @@ final class SliderShortcode {
 								<?php if ( '' !== $item['content']['title'] ) : ?>
 									<div class="my-slider-pro-content my-slider-pro-layer my-slider-pro-heading-layer" style="<?php echo esc_attr( $heading_style ); ?>">
 										<?php if ( '' !== $item['content']['heading_link_url'] ) : ?>
-											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['heading_link_url'] ); ?>">
+											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['heading_link_url'] ); ?>"<?php echo ! empty( $item['content']['heading_target'] ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 												<h2><?php echo esc_html( $item['content']['title'] ); ?></h2>
 											</a>
 										<?php else : ?>
@@ -279,7 +279,7 @@ final class SliderShortcode {
 								<?php if ( '' !== $item['content']['description'] ) : ?>
 									<div class="my-slider-pro-content my-slider-pro-layer my-slider-pro-description-layer" style="<?php echo esc_attr( $description_style ); ?>">
 										<?php if ( '' !== $item['content']['description_link_url'] ) : ?>
-											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['description_link_url'] ); ?>">
+											<a class="my-slider-pro-layer-link" href="<?php echo esc_url( $item['content']['description_link_url'] ); ?>"<?php echo ! empty( $item['content']['description_target'] ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>>
 												<p><?php echo nl2br( esc_html( $item['content']['description'] ) ); ?></p>
 											</a>
 										<?php else : ?>

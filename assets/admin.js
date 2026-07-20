@@ -832,6 +832,20 @@
 		var $fields = $( '<div>', { 'class': 'psp-slide-fields' } );
 		var $target = $( '<label>', { 'class': 'psp-check-field psp-slide-target-field' } );
 
+		function makeTargetField( key, label ) {
+			var $wrap = $( '<label>', { 'class': 'psp-check-field psp-slide-target-field' } );
+
+			$wrap.append( $( '<input>', {
+				'class': 'psp-slide-content-input',
+				type: 'checkbox',
+				name: fieldName( attachmentId, key ),
+				value: '1'
+			} ) );
+			$wrap.append( $( '<span>' ).text( label ) );
+
+			return $wrap;
+		}
+
 		$details.append( $( '<summary>' ).text( config.slideContentLabel || 'Selected slide properties' ) );
 		$fields.append( makeField( attachmentId, 'title', config.headingLabel || 'Heading', 'text', '', false ) );
 		$fields.append( makeField( attachmentId, 'description', config.descriptionLabel || 'Description', 'textarea', '', true ) );
@@ -849,7 +863,14 @@
 			value: '1'
 		} ) );
 		$target.append( $( '<span>' ).text( config.newTabLabel || 'Open button link in a new tab' ) );
-		$fields.append( $target, makeLayerControls( attachmentId ), makeExtraLayersContainer( attachmentId ) );
+		$fields.append(
+			$target,
+			makeTargetField( 'heading_target', 'Open heading link in a new tab' ),
+			makeTargetField( 'description_target', 'Open text link in a new tab' ),
+			makeTargetField( 'image_target', 'Open image link in a new tab' ),
+			makeLayerControls( attachmentId ),
+			makeExtraLayersContainer( attachmentId )
+		);
 		$details.append( $fields );
 
 		return $details;
@@ -1339,7 +1360,7 @@
 		$layerWorkspace.find( '[data-psp-content-toggle]' ).each( function () {
 			var $control = $( this );
 			var key = String( $control.attr( 'data-psp-content-toggle' ) || '' );
-			var extraKey = keys.extraIndex >= 0 ? ( 'button_target' === key ? 'target' : '' ) : key;
+			var extraKey = keys.extraIndex >= 0 ? ( /_target$/.test( key ) ? 'target' : '' ) : key;
 			var $field;
 
 			if ( ! extraKey ) {
@@ -2730,7 +2751,7 @@
 	$layerWorkspace.on( 'change', '[data-psp-content-toggle]', function () {
 		var key = String( $( this ).attr( 'data-psp-content-toggle' ) || '' );
 		var extraIndex = extraLayerIndex( activeEditorLayer );
-		var fieldKey = extraIndex >= 0 ? ( 'button_target' === key ? 'target' : '' ) : key;
+		var fieldKey = extraIndex >= 0 ? ( /_target$/.test( key ) ? 'target' : '' ) : key;
 		var $field;
 
 		if ( ! fieldKey ) {
@@ -2804,6 +2825,112 @@
 	$( '[data-psp-collapsible].is-collapsed' ).each( function () {
 		setCollapsibleState( $( this ), true );
 	} );
+	// Internal link picker: live-search published pages/posts over the REST
+	// search endpoint and insert the chosen permalink into the link field.
+	var linkSearchTimer = null;
+	var linkSearchRequest = null;
+
+	function closeLinkPicker() {
+		if ( linkSearchTimer ) {
+			window.clearTimeout( linkSearchTimer );
+			linkSearchTimer = null;
+		}
+		if ( linkSearchRequest && linkSearchRequest.abort ) {
+			linkSearchRequest.abort();
+			linkSearchRequest = null;
+		}
+		$( '.psp-link-picker' ).remove();
+		$( document ).off( 'mousedown.pspLinkPicker keydown.pspLinkPicker' );
+	}
+
+	function renderLinkResults( $list, items ) {
+		$list.empty();
+		if ( ! items || ! items.length ) {
+			$list.append( $( '<li>', { 'class': 'psp-link-picker-empty' } ).text( config.linkPickerNoResults || 'No matches found.' ) );
+			return;
+		}
+		items.forEach( function ( item ) {
+			var subtype = String( item.subtype || '' );
+			var $btn = $( '<button>', { type: 'button', 'class': 'psp-link-picker-result', 'data-url': String( item.url || '' ) } );
+
+			$btn.append( $( '<span>', { 'class': 'psp-link-picker-result-title' } ).text( String( item.title || item.url || '' ) ) );
+			$btn.append( $( '<span>', { 'class': 'psp-link-picker-result-type' } ).text( subtype ? subtype.charAt( 0 ).toUpperCase() + subtype.slice( 1 ) : '' ) );
+			$list.append( $( '<li>' ).append( $btn ) );
+		} );
+	}
+
+	function searchLinkContent( term, $list ) {
+		if ( linkSearchRequest && linkSearchRequest.abort ) {
+			linkSearchRequest.abort();
+		}
+		$list.empty().append( $( '<li>', { 'class': 'psp-link-picker-empty' } ).text( config.linkPickerSearching || 'Searching…' ) );
+		linkSearchRequest = $.ajax( {
+			url: String( config.restSearchUrl || '' ),
+			data: { search: term, per_page: 20, type: 'post', subtype: 'any', _fields: 'title,url,subtype' },
+			beforeSend: function ( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', String( config.restNonce || '' ) );
+			}
+		} ).done( function ( items ) {
+			renderLinkResults( $list, items );
+		} ).fail( function ( xhr, status ) {
+			if ( 'abort' === status ) {
+				return;
+			}
+			$list.empty().append( $( '<li>', { 'class': 'psp-link-picker-empty' } ).text( config.linkPickerError || 'Search failed. Check your connection and try again.' ) );
+		} );
+	}
+
+	$layerWorkspace.on( 'click', '.psp-link-pick', function () {
+		var $fieldWrap = $( this ).closest( '.psp-link-field' );
+		var $urlInput = $fieldWrap.find( 'input[type="url"]' );
+		var $picker;
+		var $search;
+		var $list;
+
+		if ( $fieldWrap.find( '.psp-link-picker' ).length ) {
+			closeLinkPicker();
+			return;
+		}
+		closeLinkPicker();
+
+		$search = $( '<input>', { type: 'search', 'class': 'psp-link-picker-search', placeholder: config.linkPickerPlaceholder || 'Search pages and posts…' } );
+		$list = $( '<ul>', { 'class': 'psp-link-picker-results' } );
+		$picker = $( '<div>', { 'class': 'psp-link-picker', role: 'dialog', 'aria-label': config.linkPickerTitle || 'Link to existing content' } );
+		$picker.append( $search, $list, $( '<p>', { 'class': 'psp-link-picker-hint' } ).text( config.linkPickerHint || 'Or paste any external URL in the field.' ) );
+		$fieldWrap.append( $picker );
+		$search.trigger( 'focus' );
+
+		$search.on( 'input', function () {
+			var term = String( $( this ).val() || '' ).trim();
+
+			if ( linkSearchTimer ) {
+				window.clearTimeout( linkSearchTimer );
+			}
+			if ( term.length < 2 ) {
+				$list.empty();
+				return;
+			}
+			linkSearchTimer = window.setTimeout( function () {
+				searchLinkContent( term, $list );
+			}, 300 );
+		} );
+		$picker.on( 'click', '.psp-link-picker-result', function () {
+			$urlInput.val( String( $( this ).attr( 'data-url' ) || '' ) ).trigger( 'change' );
+			closeLinkPicker();
+			$urlInput.trigger( 'focus' );
+		} );
+		$( document ).on( 'mousedown.pspLinkPicker', function ( event ) {
+			if ( ! $( event.target ).closest( '.psp-link-picker, .psp-link-pick' ).length ) {
+				closeLinkPicker();
+			}
+		} );
+		$( document ).on( 'keydown.pspLinkPicker', function ( event ) {
+			if ( 'Escape' === event.key ) {
+				closeLinkPicker();
+			}
+		} );
+	} );
+
 	$layerWorkspace.on( 'click', '.psp-inspector-image-pick', function () {
 		var $field = $( this ).closest( '.psp-inspector-image-field' ).find( '[data-psp-style-key="image_layer_url"]' );
 

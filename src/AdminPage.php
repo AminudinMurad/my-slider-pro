@@ -231,6 +231,14 @@ final class AdminPage {
 			array(
 				'frameTitle'       => __( 'Choose slider images', 'my-slider-pro' ),
 				'frameButton'      => __( 'Use selected images', 'my-slider-pro' ),
+				'restSearchUrl'    => rest_url( 'wp/v2/search' ),
+				'restNonce'        => wp_create_nonce( 'wp_rest' ),
+				'linkPickerTitle'  => __( 'Link to existing content', 'my-slider-pro' ),
+				'linkPickerPlaceholder' => __( 'Search pages and posts…', 'my-slider-pro' ),
+				'linkPickerSearching' => __( 'Searching…', 'my-slider-pro' ),
+				'linkPickerNoResults' => __( 'No matches found.', 'my-slider-pro' ),
+				'linkPickerError'  => __( 'Search failed. Check your connection and try again.', 'my-slider-pro' ),
+				'linkPickerHint'   => __( 'Or paste any external URL in the field.', 'my-slider-pro' ),
 				'removeText'       => __( 'Remove', 'my-slider-pro' ),
 				'replaceImageText' => __( 'Replace', 'my-slider-pro' ),
 				'maxLayersPerType' => SliderPostType::MAX_LAYERS_PER_TYPE,
@@ -371,12 +379,44 @@ final class AdminPage {
 		?>
 		<div class="wrap my-slider-pro-admin">
 			<?php self::render_notice(); ?>
-			<header class="psp-page-header">
-				<div class="psp-title-row">
-					<h1 id="psp-page-title"><?php echo esc_html__( 'Sliders', 'my-slider-pro' ); ?></h1>
-					<span class="psp-version-inline"><?php echo esc_html( MY_SLIDER_PRO_NAME . ' v' . MY_SLIDER_PRO_VERSION ); ?></span>
+			<header class="psp-page-header psp-hero">
+				<span class="psp-hero-glyph" aria-hidden="true">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" focusable="false">
+						<defs>
+							<linearGradient id="psp-hbg" x1="0" y1="0" x2="1" y2="1">
+								<stop offset="0" stop-color="#2b86cf"/>
+								<stop offset="1" stop-color="#135e96"/>
+							</linearGradient>
+							<linearGradient id="psp-hsky" x1="0" y1="0" x2="0" y2="1">
+								<stop offset="0" stop-color="#eaf3fb"/>
+								<stop offset="1" stop-color="#cfe4f6"/>
+							</linearGradient>
+							<clipPath id="psp-hfront"><rect x="70" y="70" width="116" height="116" rx="16"/></clipPath>
+						</defs>
+						<rect width="256" height="256" rx="56" fill="url(#psp-hbg)"/>
+						<rect x="26" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+						<rect x="196" y="88" width="34" height="80" rx="10" fill="#ffffff" opacity="0.22"/>
+						<rect x="70" y="70" width="116" height="116" rx="16" fill="#ffffff"/>
+						<g clip-path="url(#psp-hfront)">
+							<rect x="70" y="70" width="116" height="116" fill="url(#psp-hsky)"/>
+							<circle cx="156" cy="104" r="14" fill="#ffcf6b"/>
+							<path d="M70 186 L110 132 L138 160 L162 128 L186 158 L186 186 Z" fill="#2271b1"/>
+							<path d="M70 186 L98 154 L120 172 L146 150 L186 186 Z" fill="#17567f"/>
+						</g>
+						<path d="M52 128 l-12 10 l12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+						<path d="M204 128 l12 10 l-12 10" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+						<circle cx="108" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+						<circle cx="128" cy="210" r="7" fill="#ffffff"/>
+						<circle cx="148" cy="210" r="6" fill="#ffffff" opacity="0.55"/>
+					</svg>
+				</span>
+				<div class="psp-hero-copy">
+					<div class="psp-title-row">
+						<h1 id="psp-page-title"><?php echo esc_html__( 'Sliders', 'my-slider-pro' ); ?></h1>
+						<span class="psp-version-inline"><?php echo esc_html( MY_SLIDER_PRO_NAME . ' v' . MY_SLIDER_PRO_VERSION ); ?></span>
+					</div>
+					<p><?php echo esc_html__( 'Create responsive image sliders from your WordPress Media Library. Export a slider as a portable ZIP, or import one to recreate it here.', 'my-slider-pro' ); ?></p>
 				</div>
-				<p><?php echo esc_html__( 'Create responsive image sliders from your WordPress Media Library. Export a slider as a portable ZIP, or import one to recreate it here.', 'my-slider-pro' ); ?></p>
 			</header>
 
 			<section class="psp-section" aria-labelledby="psp-sliders-title">
@@ -674,7 +714,8 @@ final class AdminPage {
 										<label><span><?php echo esc_html__( 'Heading size', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="24" max="96" value="64" data-psp-style-key="heading_size" /><small>px</small></span></label>
 										<label><span><?php echo esc_html__( 'Opacity', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="10" max="100" value="100" data-psp-style-key="heading_opacity" /><small>%</small></span></label>
 										<label><span><?php echo esc_html__( 'Alignment', 'my-slider-pro' ); ?></span><?php self::render_align_segment( 'text_align' ); ?></label>
-										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><input type="url" placeholder="https://" data-psp-style-key="heading_link_url" /></label>
+										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><?php self::render_link_field( 'heading_link_url' ); ?></label>
+										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-content-toggle="heading_target" /> <span><?php echo esc_html__( 'Open link in a new tab', 'my-slider-pro' ); ?></span></label>
 									</div>
 									<div class="psp-layer-style-section" data-psp-style-section="description" hidden>
 										<h4><?php echo esc_html__( 'Description style', 'my-slider-pro' ); ?></h4>
@@ -684,7 +725,8 @@ final class AdminPage {
 										<label><span><?php echo esc_html__( 'Text size', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="12" max="36" value="20" data-psp-style-key="description_size" /><small>px</small></span></label>
 										<label><span><?php echo esc_html__( 'Opacity', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="10" max="100" value="100" data-psp-style-key="description_opacity" /><small>%</small></span></label>
 										<label><span><?php echo esc_html__( 'Alignment', 'my-slider-pro' ); ?></span><?php self::render_align_segment( 'description_align' ); ?></label>
-										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><input type="url" placeholder="https://" data-psp-style-key="description_link_url" /></label>
+										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><?php self::render_link_field( 'description_link_url' ); ?></label>
+										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-content-toggle="description_target" /> <span><?php echo esc_html__( 'Open link in a new tab', 'my-slider-pro' ); ?></span></label>
 									</div>
 									<div class="psp-layer-style-section" data-psp-style-section="button" hidden>
 										<h4><?php echo esc_html__( 'Button style', 'my-slider-pro' ); ?></h4>
@@ -697,7 +739,7 @@ final class AdminPage {
 						<label><span><?php echo esc_html__( 'Corner radius', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="0" max="50" value="4" data-psp-style-key="button_radius" /><small>px</small></span></label>
 										<label><span><?php echo esc_html__( 'Horizontal padding', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="8" max="48" value="20" data-psp-style-key="button_padding_x" /><small>px</small></span></label>
 										<label><span><?php echo esc_html__( 'Vertical padding', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="6" max="30" value="12" data-psp-style-key="button_padding_y" /><small>px</small></span></label>
-										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><input type="url" placeholder="https://" data-psp-style-key="button_url" /></label>
+										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><?php self::render_link_field( 'button_url' ); ?></label>
 										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-content-toggle="button_target" /> <span><?php echo esc_html__( 'Open link in a new tab', 'my-slider-pro' ); ?></span></label>
 									</div>
 									<div class="psp-layer-style-section" data-psp-style-section="image" hidden>
@@ -706,10 +748,11 @@ final class AdminPage {
 										<label><span><?php echo esc_html__( 'Opacity', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="10" max="100" value="100" data-psp-style-key="image_opacity" /><small>%</small></span></label>
 										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Image URL', 'my-slider-pro' ); ?></span><span class="psp-inspector-image-field"><input type="url" placeholder="https://" data-psp-style-key="image_layer_url" /><button type="button" class="button psp-inspector-image-pick"><?php echo esc_html__( 'Choose', 'my-slider-pro' ); ?></button></span></label>
 										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Alt text', 'my-slider-pro' ); ?></span><input type="text" data-psp-style-key="image_layer_alt" /></label>
-										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><input type="url" placeholder="https://" data-psp-style-key="image_link_url" /></label>
+										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><?php self::render_link_field( 'image_link_url' ); ?></label>
+										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-content-toggle="image_target" /> <span><?php echo esc_html__( 'Open link in a new tab', 'my-slider-pro' ); ?></span></label>
 									</div>
-									<div class="psp-layer-collapsible is-collapsed" data-psp-collapsible>
-										<button type="button" class="psp-accordion-toggle" aria-expanded="false"><span class="dashicons dashicons-controls-play psp-acc-lead" aria-hidden="true"></span><?php echo esc_html__( 'Animation', 'my-slider-pro' ); ?><span class="dashicons dashicons-arrow-down-alt2 psp-acc-chevron" aria-hidden="true"></span></button>
+									<div class="psp-layer-collapsible">
+										<div class="psp-accordion-toggle psp-accordion-static"><span class="dashicons dashicons-controls-play psp-acc-lead" aria-hidden="true"></span><?php echo esc_html__( 'Animation', 'my-slider-pro' ); ?></div>
 										<div class="psp-accordion-body">
 											<div class="psp-layer-animation-section">
 												<label><span><?php echo esc_html__( 'Type', 'my-slider-pro' ); ?></span><select data-psp-animation-key="animation"><option value="none"><?php echo esc_html__( 'None', 'my-slider-pro' ); ?></option><option value="fade"><?php echo esc_html__( 'Fade', 'my-slider-pro' ); ?></option><option value="slide-up"><?php echo esc_html__( 'Slide up', 'my-slider-pro' ); ?></option><option value="slide-down"><?php echo esc_html__( 'Slide down', 'my-slider-pro' ); ?></option><option value="slide-left"><?php echo esc_html__( 'Slide left', 'my-slider-pro' ); ?></option><option value="slide-right"><?php echo esc_html__( 'Slide right', 'my-slider-pro' ); ?></option><option value="zoom"><?php echo esc_html__( 'Zoom', 'my-slider-pro' ); ?></option></select></label>
@@ -1374,6 +1417,18 @@ final class AdminPage {
 						<input class="psp-slide-content-input" type="checkbox" name="my_slider_pro_slide_content[<?php echo esc_attr( (string) $attachment_id ); ?>][button_target]" value="1" <?php checked( $content['button_target'] ); ?> />
 						<span><?php echo esc_html__( 'Open button link in a new tab', 'my-slider-pro' ); ?></span>
 					</label>
+					<label class="psp-check-field psp-slide-target-field">
+						<input class="psp-slide-content-input" type="checkbox" name="my_slider_pro_slide_content[<?php echo esc_attr( (string) $attachment_id ); ?>][heading_target]" value="1" <?php checked( ! empty( $content['heading_target'] ) ); ?> />
+						<span><?php echo esc_html__( 'Open heading link in a new tab', 'my-slider-pro' ); ?></span>
+					</label>
+					<label class="psp-check-field psp-slide-target-field">
+						<input class="psp-slide-content-input" type="checkbox" name="my_slider_pro_slide_content[<?php echo esc_attr( (string) $attachment_id ); ?>][description_target]" value="1" <?php checked( ! empty( $content['description_target'] ) ); ?> />
+						<span><?php echo esc_html__( 'Open text link in a new tab', 'my-slider-pro' ); ?></span>
+					</label>
+					<label class="psp-check-field psp-slide-target-field">
+						<input class="psp-slide-content-input" type="checkbox" name="my_slider_pro_slide_content[<?php echo esc_attr( (string) $attachment_id ); ?>][image_target]" value="1" <?php checked( ! empty( $content['image_target'] ) ); ?> />
+						<span><?php echo esc_html__( 'Open image link in a new tab', 'my-slider-pro' ); ?></span>
+					</label>
 					<?php self::render_extra_layer_controls( $attachment_id, $content['extra_layers'] ); ?>
 					<?php self::render_layer_position_controls( $attachment_id, $content ); ?>
 				</div>
@@ -1527,6 +1582,22 @@ final class AdminPage {
 	 * @param string $style_key Hidden style key managed by the layer inspector.
 	 * @return void
 	 */
+	/**
+	 * Render an inspector link field: a free URL input plus a button that
+	 * opens the internal page/post search picker.
+	 *
+	 * @param string $style_key Inspector style key the input writes to.
+	 * @return void
+	 */
+	private static function render_link_field( string $style_key ): void {
+		?>
+		<span class="psp-link-field">
+			<input type="url" placeholder="https://" data-psp-style-key="<?php echo esc_attr( $style_key ); ?>" />
+			<button type="button" class="button psp-link-pick" title="<?php echo esc_attr__( 'Link to a page or post on this site', 'my-slider-pro' ); ?>" aria-label="<?php echo esc_attr__( 'Search pages and posts to link', 'my-slider-pro' ); ?>"><span class="dashicons dashicons-admin-links" aria-hidden="true"></span></button>
+		</span>
+		<?php
+	}
+
 	private static function render_font_select( string $style_key ): void {
 		$options = array(
 			'theme'       => esc_html__( 'Theme default', 'my-slider-pro' ),
@@ -1675,6 +1746,8 @@ final class AdminPage {
 	 */
 	private static function render_settings_fields( array $settings ): void {
 		?>
+		<div class="psp-settings-layout">
+		<div class="psp-settings-frame">
 		<div class="psp-settings-width" data-psp-width-group>
 			<label class="psp-width-field"><span><?php echo esc_html__( 'Slider width', 'my-slider-pro' ); ?></span>
 				<select id="my-slider-pro-width" name="slider_width">
@@ -1754,6 +1827,7 @@ final class AdminPage {
 				<option value="full" <?php selected( $settings['mobile_button_size'], 'full' ); ?>><?php echo esc_html__( 'Full width', 'my-slider-pro' ); ?></option>
 			</select>
 		</div>
+		</div>
 
 		<div class="psp-settings-groups">
 			<div class="psp-check-group">
@@ -1798,6 +1872,7 @@ final class AdminPage {
 					</label>
 				</div>
 			</div>
+		</div>
 		</div>
 		<?php
 	}

@@ -548,6 +548,15 @@ mySlider_test_contains( 'data-psp-style-key="font_family"', $editor_output, 'The
 mySlider_test_contains( 'data-psp-style-key="heading_link_url"', $editor_output, 'The layer inspector must expose the heading link field.' );
 mySlider_test_contains( 'data-psp-style-key="button_url"', $editor_output, 'The layer inspector must expose the button link field.' );
 mySlider_test_contains( 'data-psp-content-toggle="button_target"', $editor_output, 'The layer inspector must expose the open-in-new-tab toggle.' );
+mySlider_test_contains( 'data-psp-content-toggle="heading_target"', $editor_output, 'The heading section needs its own open-in-new-tab toggle.' );
+mySlider_test_contains( 'data-psp-content-toggle="description_target"', $editor_output, 'The description section needs its own open-in-new-tab toggle.' );
+mySlider_test_contains( 'data-psp-content-toggle="image_target"', $editor_output, 'The image section needs its own open-in-new-tab toggle.' );
+mySlider_test_contains( 'psp-link-pick', $editor_output, 'Inspector link fields must offer the internal page/post picker.' );
+mySlider_test_contains( '[heading_target]', $editor_output, 'The hidden slide store must persist the heading new-tab flag.' );
+mySlider_test_contains( '[description_target]', $editor_output, 'The hidden slide store must persist the description new-tab flag.' );
+mySlider_test_contains( '[image_target]', $editor_output, 'The hidden slide store must persist the image new-tab flag.' );
+mySlider_test_contains( 'psp-accordion-static', $editor_output, 'The Animation section must render as a static, always-visible section.' );
+mySlider_test_assert( false === strpos( $editor_output, 'data-psp-collapsible' ), 'No collapsed accordions may remain in the layer inspector.' );
 mySlider_test_contains( 'data-psp-style-key="image_layer_url"', $editor_output, 'The layer inspector must expose the image layer URL field.' );
 mySlider_test_contains( 'data-psp-slide-key="background_position"', $editor_output, 'The Background settings panel must expose the position control.' );
 mySlider_test_contains( 'value="poppins"', $editor_output, 'The layer inspector needs Poppins as a font choice.' );
@@ -631,6 +640,7 @@ $_POST = array(
 			'title'         => 'Saved heading',
 			'description'   => 'Saved description',
 			'heading_link_url' => 'https://example.test/saved-heading',
+			'heading_target' => '1',
 			'description_link_url' => 'https://example.test/saved-description',
 			'button_label'  => 'Visit',
 			'button_url'    => 'https://example.test/visit',
@@ -638,6 +648,7 @@ $_POST = array(
 			'image_layer_url' => 'https://example.test/logo.png',
 			'image_layer_alt' => 'Brand logo',
 			'image_link_url' => 'https://example.test/logo-link',
+			'image_target'   => '1',
 			'background_position'        => 'center_left',
 			'tablet_background_position' => 'top_right',
 			'mobile_background_position' => 'bottom_center',
@@ -836,6 +847,9 @@ mySlider_test_contains( '--my-slider-pro-layer-z:4', $slider_output, 'The frontm
 mySlider_test_contains( '--my-slider-pro-layer-z:2', $slider_output, 'The middle layer needs its public stacking index.' );
 mySlider_test_contains( '--my-slider-pro-layer-z:1', $slider_output, 'The backmost layer needs the lowest public stacking index.' );
 mySlider_test_contains( 'target="_blank" rel="noopener noreferrer"', $slider_output, 'New-tab CTA links need safe rel attributes.' );
+mySlider_test_contains( 'href="https://example.test/saved-heading" target="_blank" rel="noopener noreferrer"', $slider_output, 'A heading link with the new-tab flag must open in a new tab.' );
+mySlider_test_contains( 'href="https://example.test/logo-link" target="_blank" rel="noopener noreferrer"', $slider_output, 'An image link with the new-tab flag must open in a new tab.' );
+mySlider_test_assert( false === strpos( $slider_output, 'href="https://example.test/saved-description" target="_blank"' ), 'A link without the new-tab flag must stay in the same tab.' );
 mySlider_test_contains( '--my-slider-pro-bg-position:left center', $slider_output, 'The desktop background position must reach public markup.' );
 mySlider_test_contains( '--my-slider-pro-bg-position-tablet:right top', $slider_output, 'The tablet background position must reach public markup.' );
 mySlider_test_contains( '--my-slider-pro-bg-position-mobile:center bottom', $slider_output, 'The phone background position must reach public markup.' );
