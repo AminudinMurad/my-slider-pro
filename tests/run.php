@@ -50,15 +50,15 @@ require dirname( __DIR__ ) . '/my-slider-pro.php';
 global $mySlider_test_state;
 
 mySlider_test_assert( defined( 'MY_SLIDER_PRO_VERSION' ), 'The version constant is missing.' );
-mySlider_test_assert( '1.0.3' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.3.' );
+mySlider_test_assert( '1.0.4' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.4.' );
 mySlider_test_assert( 'MY Slider PRO' === MY_SLIDER_PRO_NAME, 'The plugin name constant is incorrect.' );
 
 $plugin_source  = (string) file_get_contents( dirname( __DIR__ ) . '/my-slider-pro.php' );
 $readme_source  = (string) file_get_contents( dirname( __DIR__ ) . '/readme.txt' );
 $license_source = (string) file_get_contents( dirname( __DIR__ ) . '/LICENSE' );
 
-mySlider_test_contains( 'Version:           1.0.3', $plugin_source, 'The plugin header version is incorrect.' );
-mySlider_test_contains( 'Stable tag: 1.0.3', $readme_source, 'The readme stable tag is incorrect.' );
+mySlider_test_contains( 'Version:           1.0.4', $plugin_source, 'The plugin header version is incorrect.' );
+mySlider_test_contains( 'Stable tag: 1.0.4', $readme_source, 'The readme stable tag is incorrect.' );
 mySlider_test_contains( 'License:           GPLv3', $plugin_source, 'The plugin header must declare the GPLv3 license.' );
 mySlider_test_contains( 'License: GPLv3', $readme_source, 'The readme must declare the GPLv3 license.' );
 mySlider_test_assert( 0 === strpos( ltrim( $license_source ), 'GNU GENERAL PUBLIC LICENSE' ), 'The GPLv3 license file is incorrect.' );
@@ -986,4 +986,4 @@ mySlider_test_contains( 'ResizeObserver', $frontend_js, 'The public slider must 
 mySlider_test_contains( 'prefers-reduced-motion', $frontend_js, 'Autoplay must respect reduced-motion preferences.' );
 mySlider_test_contains( 'focusin', $frontend_js, 'Autoplay must pause while a user interacts with controls.' );
 
-echo 'MY Slider PRO v1.0.3 slider behavior tests passed' . PHP_EOL;
+echo 'MY Slider PRO v1.0.4 slider behavior tests passed' . PHP_EOL;

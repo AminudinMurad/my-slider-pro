@@ -4,7 +4,7 @@ Tags: slider, image slider, responsive, homepage, carousel
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Copyright: 2026 Aminudin Murad
@@ -44,6 +44,11 @@ MY Slider PRO is free and open source. If it helps you build sliders, please con
 Thank you for helping keep MY Slider PRO improving and freely available.
 
 == Changelog ==
+
+= 1.0.4 =
+
+* Fixed the "Slide Background" button doing nothing on a brand-new slider; it now opens the image picker so the chosen image becomes the first slide.
+* Fixed a broken-image icon showing in the background thumbnail before any background image is set.
 
 = 1.0.3 =
 
