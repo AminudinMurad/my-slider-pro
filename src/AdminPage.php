@@ -608,7 +608,7 @@ final class AdminPage {
 								<div class="psp-bg-group">
 									<p class="psp-group-label"><span class="dashicons dashicons-format-image" aria-hidden="true"></span><?php echo esc_html__( 'Image', 'my-slider-pro' ); ?></p>
 									<div class="psp-bg-image-row">
-										<span class="psp-bg-thumb"><img id="psp-bg-thumb-img" src="" alt="" /><span class="psp-bg-thumb-empty dashicons dashicons-format-image" aria-hidden="true"></span></span>
+										<span class="psp-bg-thumb is-empty"><img id="psp-bg-thumb-img" alt="" /><span class="psp-bg-thumb-empty dashicons dashicons-format-image" aria-hidden="true"></span></span>
 										<button type="button" class="button psp-replace-background"><span class="dashicons dashicons-update" aria-hidden="true"></span><?php echo esc_html__( 'Replace background', 'my-slider-pro' ); ?></button>
 									</div>
 									<p class="psp-bg-thumb-name" id="psp-bg-thumb-name"></p>

@@ -1212,7 +1212,15 @@
 
 	function syncBackgroundThumb( $item ) {
 		var src = $item && $item.length ? String( $item.attr( 'data-preview-url' ) || $item.find( '.psp-media-thumbnail img' ).attr( 'src' ) || '' ) : '';
-		$( '#psp-bg-thumb-img' ).attr( 'src', src );
+		var $thumbImg = $( '#psp-bg-thumb-img' );
+
+		// Never leave an empty-string src: browsers render that as a broken
+		// image. Drop the attribute entirely when there is no background.
+		if ( src ) {
+			$thumbImg.attr( 'src', src );
+		} else {
+			$thumbImg.removeAttr( 'src' );
+		}
 		$( '.psp-bg-thumb' ).toggleClass( 'is-empty', ! src );
 		$( '#psp-bg-thumb-name' ).text( $item && $item.length ? itemTitle( $item ) : '' );
 	}
