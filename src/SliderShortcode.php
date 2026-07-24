@@ -82,7 +82,7 @@ final class SliderShortcode {
 				self::FONT_HANDLE,
 				$font_src,
 				array(),
-				null
+				MY_SLIDER_PRO_VERSION
 			);
 			$style_deps[] = self::FONT_HANDLE;
 		}
@@ -108,6 +108,7 @@ final class SliderShortcode {
 				'nextLabel'     => __( 'Next slide', 'my-slider-pro' ),
 				'pauseLabel'    => __( 'Pause slide rotation', 'my-slider-pro' ),
 				'playLabel'     => __( 'Resume slide rotation', 'my-slider-pro' ),
+				/* translators: 1: current slide number, 2: total number of slides. */
 				'slideText'     => __( 'Slide %1$d of %2$d', 'my-slider-pro' ),
 			)
 		);
@@ -208,7 +209,7 @@ final class SliderShortcode {
 				id="<?php echo esc_attr( $instance ); ?>"
 				class="<?php echo esc_attr( $classes ); ?>"
 				aria-roledescription="<?php echo esc_attr__( 'carousel', 'my-slider-pro' ); ?>"
-				aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Slider: %s', 'my-slider-pro' ), $title ) ); ?>"
+				aria-label="<?php /* translators: %s: slider title. */ echo esc_attr( sprintf( esc_html__( 'Slider: %s', 'my-slider-pro' ), $title ) ); ?>"
 				data-psp-slider
 				data-psp-autoplay="<?php echo $settings['autoplay'] ? '1' : '0'; ?>"
 				data-psp-interval="<?php echo esc_attr( (string) $settings['interval'] ); ?>"
@@ -242,7 +243,7 @@ final class SliderShortcode {
 								class="my-slider-pro-slide"
 								role="group"
 								aria-roledescription="<?php echo esc_attr__( 'slide', 'my-slider-pro' ); ?>"
-								aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Slide %1$d of %2$d', 'my-slider-pro' ), $position, $item_count ) ); ?>"
+								aria-label="<?php /* translators: 1: current slide number, 2: total number of slides. */ echo esc_attr( sprintf( esc_html__( 'Slide %1$d of %2$d', 'my-slider-pro' ), $position, $item_count ) ); ?>"
 								data-psp-slider-slide
 							>
 								<div class="my-slider-pro-visual">
@@ -310,7 +311,7 @@ final class SliderShortcode {
 						<?php if ( $settings['dots'] ) : ?>
 							<div class="my-slider-pro-dots" role="tablist" aria-label="<?php echo esc_attr__( 'Choose slide', 'my-slider-pro' ); ?>">
 								<?php foreach ( $items as $index => $item ) : ?>
-									<button type="button" class="my-slider-pro-dot" data-psp-slider-dot="<?php echo esc_attr( (string) $index ); ?>" aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Show slide %1$d of %2$d', 'my-slider-pro' ), $index + 1, $item_count ) ); ?>" aria-current="<?php echo 0 === $index ? 'true' : 'false'; ?>"></button>
+									<button type="button" class="my-slider-pro-dot" data-psp-slider-dot="<?php echo esc_attr( (string) $index ); ?>" aria-label="<?php /* translators: 1: slide number to show, 2: total number of slides. */ echo esc_attr( sprintf( esc_html__( 'Show slide %1$d of %2$d', 'my-slider-pro' ), $index + 1, $item_count ) ); ?>" aria-current="<?php echo 0 === $index ? 'true' : 'false'; ?>"></button>
 								<?php endforeach; ?>
 							</div>
 						<?php endif; ?>

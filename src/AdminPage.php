@@ -199,7 +199,7 @@ final class AdminPage {
 			self::FONT_HANDLE,
 			self::FONT_URL,
 			array(),
-			null
+			MY_SLIDER_PRO_VERSION
 		);
 		wp_enqueue_style(
 			'my-slider-pro-admin',
@@ -258,14 +258,21 @@ final class AdminPage {
 				'addImageLayerText' => __( 'Add image', 'my-slider-pro' ),
 				'addShapeLayerText' => __( 'Add shape', 'my-slider-pro' ),
 				'imageFallback'    => __( 'Image', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: current position, 3: total number of layers. */
 				'removeLabel'      => __( 'Remove %1$s; position %2$d of %3$d', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: current position, 3: total number of layers. */
 				'moveEarlierLabel' => __( 'Move %1$s earlier; position %2$d of %3$d', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: current position, 3: total number of layers. */
 				'moveLaterLabel'   => __( 'Move %1$s later; position %2$d of %3$d', 'my-slider-pro' ),
 				'emptyText'        => __( 'No slides yet.', 'my-slider-pro' ),
 				'countSingular'    => __( '1 slide', 'my-slider-pro' ),
+				/* translators: %d: number of slides. */
 				'countPlural'      => __( '%d slides', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: new position, 3: total number of layers. */
 				'movedText'        => __( '%1$s moved to position %2$d of %3$d.', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: number of images selected. */
 				'removedText'      => __( '%1$s removed. %2$d images selected.', 'my-slider-pro' ),
+				/* translators: %d: maximum number of images that can be selected. */
 				'limitText'        => __( 'Only the first %d images were selected.', 'my-slider-pro' ),
 				'copyText'         => __( 'Copy', 'my-slider-pro' ),
 				'copiedText'       => __( 'Copied!', 'my-slider-pro' ),
@@ -325,6 +332,7 @@ final class AdminPage {
 				'lockedText'       => __( 'Locked', 'my-slider-pro' ),
 				'showOverlayLabel' => __( 'Show guides', 'my-slider-pro' ),
 				'hideOverlayLabel' => __( 'Hide guides', 'my-slider-pro' ),
+				/* translators: 1: layer name, 2: horizontal position percentage, 3: vertical position percentage. */
 				'layerMovedText' => __( '%1$s moved to %2$d%% horizontal and %3$d%% vertical.', 'my-slider-pro' ),
 				'customPositionLabel' => __( 'Custom (dragged)', 'my-slider-pro' ),
 				'layerPositionOptions' => array(
@@ -548,7 +556,7 @@ final class AdminPage {
 								printf(
 									/* translators: %d: maximum number of images per slider. */
 									esc_html__( 'Choose up to %d images. Images inherited from draft or private content remain hidden from the public slider until that content is published.', 'my-slider-pro' ),
-									SliderPostType::MAX_IMAGES
+									absint( SliderPostType::MAX_IMAGES )
 								);
 								?>
 							</p>
@@ -798,7 +806,7 @@ final class AdminPage {
 			wp_die( esc_html__( 'You do not have permission to publish sliders.', 'my-slider-pro' ) );
 		}
 
-		$image_ids = isset( $_POST['my_slider_pro_image_ids'] ) ? wp_unslash( $_POST['my_slider_pro_image_ids'] ) : array();
+		$image_ids = isset( $_POST['my_slider_pro_image_ids'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['my_slider_pro_image_ids'] ) ) : array();
 		$image_ids = self::sanitize_submitted_image_ids( $image_ids );
 
 		if ( empty( $image_ids ) ) {
@@ -1265,6 +1273,8 @@ final class AdminPage {
 	 * @return string|\WP_Error
 	 */
 	private static function uploaded_import_file() {
+		// The import nonce is verified in handle_import() before this method runs.
+		// phpcs:disable WordPress.Security.NonceVerification.Missing
 		if (
 			! isset( $_FILES['my_slider_pro_import'] ) ||
 			! is_array( $_FILES['my_slider_pro_import'] )
@@ -1274,6 +1284,7 @@ final class AdminPage {
 
 		// Individual members are validated below before use.
 		$upload = wp_unslash( $_FILES['my_slider_pro_import'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
 		$error    = isset( $upload['error'] ) ? (int) $upload['error'] : UPLOAD_ERR_NO_FILE;
 		$tmp_name = isset( $upload['tmp_name'] ) ? (string) $upload['tmp_name'] : '';
@@ -1347,7 +1358,7 @@ final class AdminPage {
 	 */
 	private static function render_media_item( int $attachment_id, int $index, int $total, array $content = array() ): void {
 		$title     = get_the_title( $attachment_id );
-		$title     = '' !== $title ? $title : sprintf( esc_html__( 'Image %d', 'my-slider-pro' ), $attachment_id );
+		$title     = '' !== $title ? $title : sprintf( /* translators: %d: attachment image ID. */ esc_html__( 'Image %d', 'my-slider-pro' ), $attachment_id );
 		$position  = $index + 1;
 		$is_public = 'publish' === get_post_status( $attachment_id );
 		$content   = SliderPostType::sanitize_slide_content( array( $attachment_id => $content ), array( $attachment_id ) )[ $attachment_id ];
@@ -1357,17 +1368,17 @@ final class AdminPage {
 			<div class="psp-slide-summary">
 				<div class="psp-media-thumbnail"><?php echo wp_get_attachment_image( $attachment_id, 'thumbnail', false, array( 'alt' => '' ) ); ?></div>
 				<div class="psp-slide-identity">
-					<strong class="psp-slide-position"><?php echo esc_html( sprintf( __( 'Slide %d', 'my-slider-pro' ), $position ) ); ?></strong>
+					<strong class="psp-slide-position"><?php echo esc_html( sprintf( /* translators: %d: slide number. */ __( 'Slide %d', 'my-slider-pro' ), $position ) ); ?></strong>
 					<span class="psp-media-title" title="<?php echo esc_attr( $title ); ?>"><?php echo esc_html( $title ); ?></span>
 					<?php if ( ! $is_public ) : ?>
 						<span class="psp-media-visibility"><?php echo esc_html__( 'Hidden until published', 'my-slider-pro' ); ?></span>
 					<?php endif; ?>
 				</div>
 				<div class="psp-media-actions">
-					<button type="button" class="button-link psp-move-earlier" aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Move %1$s earlier; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"<?php echo 1 === $position ? ' disabled' : ''; ?>>&larr;</button>
-					<button type="button" class="button-link psp-move-later" aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Move %1$s later; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"<?php echo $position === $total ? ' disabled' : ''; ?>>&rarr;</button>
-					<button type="button" class="button-link psp-replace-image" aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Replace image for %s', 'my-slider-pro' ), $title ) ); ?>"><?php echo esc_html__( 'Replace', 'my-slider-pro' ); ?></button>
-					<button type="button" class="button-link-delete psp-remove-image" aria-label="<?php echo esc_attr( sprintf( esc_html__( 'Remove %1$s; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"><?php echo esc_html__( 'Remove', 'my-slider-pro' ); ?></button>
+					<button type="button" class="button-link psp-move-earlier" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: image title, 2: current position, 3: total number of images. */ esc_html__( 'Move %1$s earlier; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"<?php echo 1 === $position ? ' disabled' : ''; ?>>&larr;</button>
+					<button type="button" class="button-link psp-move-later" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: image title, 2: current position, 3: total number of images. */ esc_html__( 'Move %1$s later; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"<?php echo $position === $total ? ' disabled' : ''; ?>>&rarr;</button>
+					<button type="button" class="button-link psp-replace-image" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: image title. */ esc_html__( 'Replace image for %s', 'my-slider-pro' ), $title ) ); ?>"><?php echo esc_html__( 'Replace', 'my-slider-pro' ); ?></button>
+					<button type="button" class="button-link-delete psp-remove-image" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: image title, 2: current position, 3: total number of images. */ esc_html__( 'Remove %1$s; position %2$d of %3$d', 'my-slider-pro' ), $title, $position, $total ) ); ?>"><?php echo esc_html__( 'Remove', 'my-slider-pro' ); ?></button>
 				</div>
 			</div>
 			<details class="psp-slide-details" data-attachment-id="<?php echo esc_attr( (string) $attachment_id ); ?>"<?php echo 0 === $index ? ' open' : ''; ?>>
@@ -2007,7 +2018,7 @@ final class AdminPage {
 				printf(
 					/* translators: %d: current slider overview page number. */
 					esc_html__( 'Page %d', 'my-slider-pro' ),
-					$current_page
+					absint( $current_page )
 				);
 				?>
 			</span>
@@ -2146,11 +2157,13 @@ final class AdminPage {
 	 * @return int
 	 */
 	private static function posted_integer( string $key ): int {
-		if ( ! isset( $_POST[ $key ] ) || is_array( $_POST[ $key ] ) || is_object( $_POST[ $key ] ) ) {
+		// Callers verify the request nonce before acting on the value returned here
+		// (the ID is read first only to build the per-slider nonce action string).
+		if ( ! isset( $_POST[ $key ] ) || is_array( $_POST[ $key ] ) || is_object( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return 0;
 		}
 
-		return absint( wp_unslash( $_POST[ $key ] ) );
+		return absint( wp_unslash( $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
 	/**
@@ -2160,11 +2173,12 @@ final class AdminPage {
 	 * @return string
 	 */
 	private static function posted_text( string $key ): string {
-		if ( ! isset( $_POST[ $key ] ) || is_array( $_POST[ $key ] ) || is_object( $_POST[ $key ] ) ) {
+		// Nonce is verified by the calling save/delete/import handler before this runs.
+		if ( ! isset( $_POST[ $key ] ) || is_array( $_POST[ $key ] ) || is_object( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return '';
 		}
 
-		return sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+		return sanitize_text_field( wp_unslash( $_POST[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
 	/**
@@ -2174,8 +2188,10 @@ final class AdminPage {
 	 * @return array<int, array<string, mixed>>
 	 */
 	private static function posted_slide_content( array $image_ids ): array {
-		$content = $_POST['my_slider_pro_slide_content'] ?? array();
-		$content = is_array( $content ) ? wp_unslash( $content ) : array();
+		// Nonce is verified by handle_save() before this runs; the nested structure
+		// is fully sanitized in SliderPostType::sanitize_slide_content() below.
+		$content = isset( $_POST['my_slider_pro_slide_content'] ) ? wp_unslash( $_POST['my_slider_pro_slide_content'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$content = is_array( $content ) ? $content : array();
 
 		return SliderPostType::sanitize_slide_content( $content, $image_ids );
 	}
@@ -2186,11 +2202,12 @@ final class AdminPage {
 	 * @return int
 	 */
 	private static function requested_slider_id(): int {
-		if ( ! isset( $_GET['slider_id'] ) || is_array( $_GET['slider_id'] ) || is_object( $_GET['slider_id'] ) ) {
+		// Read-only navigation parameter used to choose which admin view to render; no state change.
+		if ( ! isset( $_GET['slider_id'] ) || is_array( $_GET['slider_id'] ) || is_object( $_GET['slider_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 0;
 		}
 
-		return absint( wp_unslash( $_GET['slider_id'] ) );
+		return absint( wp_unslash( $_GET['slider_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -2199,11 +2216,12 @@ final class AdminPage {
 	 * @return string
 	 */
 	private static function requested_editor_view(): string {
-		if ( ! isset( $_GET['editor_view'] ) || is_array( $_GET['editor_view'] ) || is_object( $_GET['editor_view'] ) ) {
+		// Read-only navigation parameter used to choose which admin view to render; no state change.
+		if ( ! isset( $_GET['editor_view'] ) || is_array( $_GET['editor_view'] ) || is_object( $_GET['editor_view'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return '';
 		}
 
-		$view = sanitize_text_field( wp_unslash( $_GET['editor_view'] ) );
+		$view = sanitize_text_field( wp_unslash( $_GET['editor_view'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		return in_array( $view, array( 'manage', 'preview' ), true ) ? $view : '';
 	}
@@ -2214,11 +2232,12 @@ final class AdminPage {
 	 * @return int
 	 */
 	private static function requested_page_number(): int {
-		if ( ! isset( $_GET['slider_page'] ) || is_array( $_GET['slider_page'] ) || is_object( $_GET['slider_page'] ) ) {
+		// Read-only pagination parameter used to choose which overview page to render; no state change.
+		if ( ! isset( $_GET['slider_page'] ) || is_array( $_GET['slider_page'] ) || is_object( $_GET['slider_page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 1;
 		}
 
-		return max( 1, absint( wp_unslash( $_GET['slider_page'] ) ) );
+		return max( 1, absint( wp_unslash( $_GET['slider_page'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -2228,10 +2247,11 @@ final class AdminPage {
 	 * @return string
 	 */
 	private static function requested_flag( string $key ): string {
-		if ( ! isset( $_GET[ $key ] ) || is_array( $_GET[ $key ] ) || is_object( $_GET[ $key ] ) ) {
+		// Read-only status flag used to render admin notices; no state change.
+		if ( ! isset( $_GET[ $key ] ) || is_array( $_GET[ $key ] ) || is_object( $_GET[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return '';
 		}
 
-		return sanitize_key( wp_unslash( $_GET[ $key ] ) );
+		return sanitize_key( wp_unslash( $_GET[ $key ] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 }

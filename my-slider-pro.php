@@ -3,7 +3,7 @@
  * Plugin Name:       MY Slider PRO
  * Plugin URI:        https://github.com/AminudinMurad/my-slider-pro
  * Description:       Build fast, responsive, and accessible photo sliders in WordPress.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Author:            Aminudin Murad
@@ -12,7 +12,6 @@
  * License:           GPLv3
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       my-slider-pro
- * Update URI:        https://github.com/AminudinMurad/my-slider-pro
  *
  * @package MySliderPro
  */
@@ -31,7 +30,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MY_SLIDER_PRO_VERSION', '1.0.5' );
+define( 'MY_SLIDER_PRO_VERSION', '1.0.6' );
 define( 'MY_SLIDER_PRO_NAME', 'MY Slider PRO' );
 define( 'MY_SLIDER_PRO_FILE', __FILE__ );
 define( 'MY_SLIDER_PRO_PATH', plugin_dir_path( __FILE__ ) );

@@ -23,7 +23,7 @@ $my_slider_pro_sliders = get_posts(
 		'post_status'      => array( 'publish', 'draft', 'pending', 'private', 'future', 'trash' ),
 		'numberposts'      => -1,
 		'fields'           => 'ids',
-		'suppress_filters' => true,
+		'suppress_filters' => false,
 	)
 );
 

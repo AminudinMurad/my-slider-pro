@@ -4,7 +4,7 @@ Tags: slider, image slider, responsive, homepage, carousel
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Copyright: 2026 Aminudin Murad
@@ -44,6 +44,10 @@ MY Slider PRO is free and open source. If it helps you build sliders, please con
 Thank you for helping keep MY Slider PRO improving and freely available.
 
 == Changelog ==
+
+= 1.0.6 =
+
+* Prepared the plugin for the WordPress.org directory: dropped the self-hosted update header, added translator comments to every text with placeholders, escaped remaining dynamic output, and tightened input sanitization on the admin screens. No changes to how sliders look or behave.
 
 = 1.0.5 =
 
