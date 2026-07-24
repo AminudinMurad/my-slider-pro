@@ -50,15 +50,15 @@ require dirname( __DIR__ ) . '/my-slider-pro.php';
 global $mySlider_test_state;
 
 mySlider_test_assert( defined( 'MY_SLIDER_PRO_VERSION' ), 'The version constant is missing.' );
-mySlider_test_assert( '1.0.4' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.4.' );
+mySlider_test_assert( '1.0.5' === MY_SLIDER_PRO_VERSION, 'The version constant is not 1.0.5.' );
 mySlider_test_assert( 'MY Slider PRO' === MY_SLIDER_PRO_NAME, 'The plugin name constant is incorrect.' );
 
 $plugin_source  = (string) file_get_contents( dirname( __DIR__ ) . '/my-slider-pro.php' );
 $readme_source  = (string) file_get_contents( dirname( __DIR__ ) . '/readme.txt' );
 $license_source = (string) file_get_contents( dirname( __DIR__ ) . '/LICENSE' );
 
-mySlider_test_contains( 'Version:           1.0.4', $plugin_source, 'The plugin header version is incorrect.' );
-mySlider_test_contains( 'Stable tag: 1.0.4', $readme_source, 'The readme stable tag is incorrect.' );
+mySlider_test_contains( 'Version:           1.0.5', $plugin_source, 'The plugin header version is incorrect.' );
+mySlider_test_contains( 'Stable tag: 1.0.5', $readme_source, 'The readme stable tag is incorrect.' );
 mySlider_test_contains( 'License:           GPLv3', $plugin_source, 'The plugin header must declare the GPLv3 license.' );
 mySlider_test_contains( 'License: GPLv3', $readme_source, 'The readme must declare the GPLv3 license.' );
 mySlider_test_assert( 0 === strpos( ltrim( $license_source ), 'GNU GENERAL PUBLIC LICENSE' ), 'The GPLv3 license file is incorrect.' );
@@ -216,6 +216,25 @@ $capped_headings = array_values( array_filter( $capped_layers, function ( $layer
 $capped_buttons  = array_values( array_filter( $capped_layers, function ( $layer ) { return 'button' === $layer['type']; } ) );
 mySlider_test_assert( 1 === count( $capped_headings ), 'A base heading plus one extra reaches the 2-per-type cap; further heading layers are dropped.' );
 mySlider_test_assert( 2 === count( $capped_buttons ), 'With no base button content, up to 2 button layers are allowed.' );
+
+$shape_layers = MySliderPro\SliderPostType::sanitize_slide_content(
+	array(
+		101 => array(
+			'title'        => 'Base heading',
+			'extra_layers' => array(
+				array( 'type' => 'shape', 'background' => '#3858e9', 'radius' => '900', 'height' => '5', 'overlay_type' => 'solid', 'overlay_opacity' => '70' ),
+				array( 'type' => 'shape' ),
+				array( 'type' => 'shape' ),
+			),
+		),
+	),
+	array( 101 )
+)[101]['extra_layers'];
+$shape_only = array_values( array_filter( $shape_layers, function ( $layer ) { return 'shape' === $layer['type']; } ) );
+mySlider_test_assert( 2 === count( $shape_only ), 'Shape layers must be capped at 2 per slide like other types.' );
+mySlider_test_assert( 400 === $shape_only[0]['radius'] && 20 === $shape_only[0]['height'], 'Shape radius and height must be clamped to their bounds.' );
+mySlider_test_assert( 'solid' === $shape_only[0]['overlay_type'] && 70 === $shape_only[0]['overlay_opacity'] && '#3858e9' === $shape_only[0]['background'], 'Shape overlay and fill fields must be sanitized.' );
+mySlider_test_assert( '' === $shape_only[0]['ratio_locked'], 'A shape must default to free (unlocked) proportions so height can be dragged independently.' );
 
 $mySlider_test_state['posts'][42] = (object) array(
 	'ID'           => 42,
@@ -495,6 +514,11 @@ mySlider_test_contains( 'psp-delete-layer', $editor_output, 'The layer inspector
 mySlider_test_contains( 'psp-replace-image', $editor_output, 'Each slide needs a control to replace its background image.' );
 mySlider_test_contains( 'psp-canvas-layer-tools', $editor_output, 'The visual editor needs canvas-level add layer tools.' );
 mySlider_test_contains( 'psp-set-slide-background', $editor_output, 'The Add Layer toolbar needs a Slide Background control.' );
+mySlider_test_contains( 'data-psp-extra-layer-type="shape"', $editor_output, 'The Add Layer toolbar needs a Shape control.' );
+mySlider_test_contains( 'data-psp-style-section="shape"', $editor_output, 'The layer inspector needs a Shape style section.' );
+mySlider_test_contains( 'data-psp-style-key="shape_fill"', $editor_output, 'The Shape inspector needs a fill-color control.' );
+mySlider_test_contains( 'data-psp-style-key="shape_radius"', $editor_output, 'The Shape inspector needs a corner-radius control.' );
+mySlider_test_contains( 'data-psp-style-key="shape_overlay_type"', $editor_output, 'The Shape inspector needs an overlay-type control.' );
 mySlider_test_contains( 'psp-canvas-panel', $editor_output, 'The editor workspace should present a visual preview canvas.' );
 mySlider_test_contains( 'Selected slide properties', $editor_output, 'The selected slide drawer should replace the old form-like slide content label.' );
 mySlider_test_contains( 'data-psp-extra-layers', $editor_output, 'Each slide needs a repeatable layer container.' );
@@ -751,6 +775,22 @@ $_POST = array(
 					'desktop_x' => '65',
 					'desktop_y' => '80',
 				),
+				array(
+					'type'              => 'shape',
+					'desktop_x'         => '30',
+					'desktop_y'         => '60',
+					'background'        => '#0f6e56',
+					'width'             => '420',
+					'height'            => '160',
+					'radius'            => '18',
+					'ratio_locked'      => '1',
+					'opacity'           => '80',
+					'overlay_type'      => 'gradient',
+					'overlay_color'     => '#101820',
+					'overlay_color2'    => '#204060',
+					'overlay_opacity'   => '60',
+					'overlay_direction' => 'to right',
+				),
 			),
 		),
 	),
@@ -826,6 +866,17 @@ mySlider_test_contains( 'href="https://example.test/saved-heading"', $slider_out
 mySlider_test_contains( 'href="https://example.test/saved-description"', $slider_output, 'Description layer links must reach public output.' );
 mySlider_test_contains( 'href="https://example.test/logo-link"', $slider_output, 'Image layer links must reach public output.' );
 mySlider_test_contains( 'Second heading', MySliderPro\SliderShortcode::render( array( 'id' => 42 ) ), 'Additional heading layers must reach public output.' );
+mySlider_test_contains( 'my-slider-pro-shape-layer my-slider-pro-layer', $slider_output, 'A shape layer must render as an independent positioned layer.' );
+mySlider_test_contains( '--my-slider-pro-shape-fill:#0f6e56', $slider_output, 'A shape layer must emit its fill color.' );
+mySlider_test_contains( '--my-slider-pro-shape-width:420px', $slider_output, 'A shape layer must emit its width.' );
+mySlider_test_contains( '--my-slider-pro-shape-height:160px', $slider_output, 'A shape layer must emit its height.' );
+mySlider_test_contains( '--my-slider-pro-shape-radius:18px', $slider_output, 'A shape layer must emit its corner radius.' );
+mySlider_test_contains( 'my-slider-pro-shape-shade', $slider_output, 'A shape with an overlay must render its shade element.' );
+mySlider_test_contains( 'linear-gradient(to right,rgba(16,24,32,0.60),rgba(32,64,96,0.60))', $slider_output, 'A shape gradient overlay must emit both colors at the chosen opacity and direction.' );
+mySlider_test_assert( 'shape' === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['type'], 'The shape layer type must persist.' );
+mySlider_test_assert( 18 === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['radius'] && 160 === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['height'], 'The shape corner radius and height must persist.' );
+mySlider_test_assert( 'gradient' === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['overlay_type'] && '#0f6e56' === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['background'], 'The shape overlay and fill must persist.' );
+mySlider_test_assert( '1' === MySliderPro\SliderPostType::get_slide_content( 42 )[101]['extra_layers'][2]['ratio_locked'], 'The shape proportion lock must persist.' );
 mySlider_test_contains( 'my-slider-pro-layer-link', $slider_output, 'Linked layers need a stable public link class.' );
 mySlider_test_contains( '--my-slider-pro-desktop-x:27%', $slider_output, 'Desktop text-layer coordinates must reach public markup.' );
 mySlider_test_contains( '--my-slider-pro-tablet-x:43%', $slider_output, 'Tablet text-layer coordinates must reach public markup.' );
@@ -939,6 +990,13 @@ mySlider_test_contains( "'input change', '[data-psp-style-key]'", $admin_js, 'St
 mySlider_test_contains( 'tablet_text_x', $admin_js, 'Tablet previews must edit independent tablet layer coordinates.' );
 mySlider_test_contains( 'mobile_text_x', $admin_js, 'Phone previews must edit independent phone layer coordinates.' );
 mySlider_test_contains( 'snapLayerCoordinate', $admin_js, 'Layer dragging must provide magnetic anchor snapping.' );
+mySlider_test_contains( 'psp-preview-shape-layer', $admin_js, 'The live preview must render a standalone Shape layer.' );
+mySlider_test_contains( 'shape_overlay_type', $admin_js, 'The editor must map the Shape overlay type to its layer field.' );
+mySlider_test_contains( 'setShapeSize', $admin_js, 'A shape must resize in two dimensions (width and height) from a drag.' );
+mySlider_test_contains( 'data-psp-shape-lock', $admin_js, 'The editor must handle the shape proportion-lock control.' );
+mySlider_test_contains( 'data-psp-shape-lock', $editor_output, 'The Shape inspector needs a proportion-lock toggle.' );
+mySlider_test_contains( '.my-slider-pro-shape-layer', $frontend_css, 'The public stylesheet must style shape layers.' );
+mySlider_test_contains( '.psp-preview-shape', $admin_css, 'The editor stylesheet must style the shape preview.' );
 mySlider_test_contains( 'var(--my-slider-pro-font-weight', $frontend_css, 'Public text layers must honor a font weight override.' );
 mySlider_test_contains( 'var(--my-slider-pro-font-style', $frontend_css, 'Public text layers must honor an italic/normal override.' );
 mySlider_test_contains( 'scroll-snap-type: x mandatory', $frontend_css, 'Slides must use native scroll-snap swipe behavior.' );
@@ -986,4 +1044,4 @@ mySlider_test_contains( 'ResizeObserver', $frontend_js, 'The public slider must 
 mySlider_test_contains( 'prefers-reduced-motion', $frontend_js, 'Autoplay must respect reduced-motion preferences.' );
 mySlider_test_contains( 'focusin', $frontend_js, 'Autoplay must pause while a user interacts with controls.' );
 
-echo 'MY Slider PRO v1.0.4 slider behavior tests passed' . PHP_EOL;
+echo 'MY Slider PRO v1.0.5 slider behavior tests passed' . PHP_EOL;

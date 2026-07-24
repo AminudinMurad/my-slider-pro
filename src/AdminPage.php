@@ -256,6 +256,7 @@ final class AdminPage {
 				'addDescriptionText' => __( 'Add description', 'my-slider-pro' ),
 				'addButtonLayerText' => __( 'Add button', 'my-slider-pro' ),
 				'addImageLayerText' => __( 'Add image', 'my-slider-pro' ),
+				'addShapeLayerText' => __( 'Add shape', 'my-slider-pro' ),
 				'imageFallback'    => __( 'Image', 'my-slider-pro' ),
 				'removeLabel'      => __( 'Remove %1$s; position %2$d of %3$d', 'my-slider-pro' ),
 				'moveEarlierLabel' => __( 'Move %1$s earlier; position %2$d of %3$d', 'my-slider-pro' ),
@@ -279,6 +280,7 @@ final class AdminPage {
 				'buttonLabel'     => __( 'Button label', 'my-slider-pro' ),
 				'buttonLinkLabel' => __( 'Button link', 'my-slider-pro' ),
 				'imageLayerLabel' => __( 'Image', 'my-slider-pro' ),
+				'shapeLayerLabel' => __( 'Shape', 'my-slider-pro' ),
 				'imageLayerUrlLabel' => __( 'Image layer URL', 'my-slider-pro' ),
 				'imageLayerAltLabel' => __( 'Image layer alt text', 'my-slider-pro' ),
 				'imageLayerChooseLabel' => __( 'Add image layer', 'my-slider-pro' ),
@@ -570,6 +572,7 @@ final class AdminPage {
 									<button type="button" class="psp-layer-tool-button psp-add-extra-layer" data-psp-extra-layer-type="description"><strong>T</strong><span><?php echo esc_html__( 'Text', 'my-slider-pro' ); ?></span></button>
 									<button type="button" class="psp-layer-tool-button psp-add-extra-layer" data-psp-extra-layer-type="button"><strong>▭</strong><span><?php echo esc_html__( 'Button', 'my-slider-pro' ); ?></span></button>
 									<button type="button" class="psp-layer-tool-button psp-add-extra-layer" data-psp-extra-layer-type="image"><strong>▧</strong><span><?php echo esc_html__( 'Image', 'my-slider-pro' ); ?></span></button>
+									<button type="button" class="psp-layer-tool-button psp-add-extra-layer" data-psp-extra-layer-type="shape"><strong>◼</strong><span><?php echo esc_html__( 'Shape', 'my-slider-pro' ); ?></span></button>
 									<button type="button" class="psp-layer-tool-button psp-set-slide-background"><strong>▦</strong><span><?php echo esc_html__( 'Slide Background', 'my-slider-pro' ); ?></span></button>
 								</div>
 								<div class="psp-device-tools">
@@ -722,6 +725,29 @@ final class AdminPage {
 										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Alt text', 'my-slider-pro' ); ?></span><input type="text" data-psp-style-key="image_layer_alt" /></label>
 										<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Link', 'my-slider-pro' ); ?></span><?php self::render_link_field( 'image_link_url' ); ?></label>
 										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-content-toggle="image_target" /> <span><?php echo esc_html__( 'Open link in a new tab', 'my-slider-pro' ); ?></span></label>
+									</div>
+									<div class="psp-layer-style-section" data-psp-style-section="shape" hidden>
+										<h4><?php echo esc_html__( 'Shape style', 'my-slider-pro' ); ?></h4>
+										<label><span><?php echo esc_html__( 'Fill color', 'my-slider-pro' ); ?></span><input type="color" value="#3858e9" data-psp-style-key="shape_fill" /></label>
+										<label><span><?php echo esc_html__( 'Corner radius', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="0" max="400" value="0" data-psp-style-key="shape_radius" /><small>px</small></span></label>
+										<label><span><?php echo esc_html__( 'Width', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="40" max="800" value="320" data-psp-style-key="shape_width" /><small>px</small></span></label>
+										<label><span><?php echo esc_html__( 'Height', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="20" max="800" value="200" data-psp-style-key="shape_height" /><small>px</small></span></label>
+										<label class="psp-inspector-wide psp-inspector-check"><input type="checkbox" data-psp-shape-lock /> <span><?php echo esc_html__( 'Lock proportions when dragging to resize', 'my-slider-pro' ); ?></span></label>
+										<label><span><?php echo esc_html__( 'Opacity', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="10" max="100" value="100" data-psp-style-key="shape_opacity" /><small>%</small></span></label>
+										<label class="psp-seg-field psp-inspector-wide"><span><?php echo esc_html__( 'Overlay', 'my-slider-pro' ); ?></span>
+											<span class="psp-seg psp-seg-labelled" role="group" aria-label="<?php echo esc_attr__( 'Shape overlay type', 'my-slider-pro' ); ?>">
+												<input type="hidden" data-psp-style-key="shape_overlay_type" value="none" />
+												<button type="button" data-psp-seg-value="none"><span class="psp-seg-label"><?php echo esc_html__( 'None', 'my-slider-pro' ); ?></span></button>
+												<button type="button" data-psp-seg-value="solid"><span class="psp-seg-label"><?php echo esc_html__( 'Solid', 'my-slider-pro' ); ?></span></button>
+												<button type="button" data-psp-seg-value="gradient"><span class="psp-seg-label"><?php echo esc_html__( 'Gradient', 'my-slider-pro' ); ?></span></button>
+											</span>
+										</label>
+										<div class="psp-shape-overlay-fields psp-inspector-wide" data-psp-shape-overlay-fields>
+											<label class="psp-shape-overlay-color-field"><span id="psp-shape-overlay-color-label"><?php echo esc_html__( 'Overlay color', 'my-slider-pro' ); ?></span><input type="color" value="#08101f" data-psp-style-key="shape_overlay_color" /></label>
+											<label class="psp-shape-overlay-gradient-only"><span><?php echo esc_html__( 'Second color', 'my-slider-pro' ); ?></span><input type="color" value="#000000" data-psp-style-key="shape_overlay_color2" /></label>
+											<label class="psp-inspector-wide"><span><?php echo esc_html__( 'Overlay opacity', 'my-slider-pro' ); ?></span><span class="psp-style-number"><input type="number" min="0" max="100" value="50" data-psp-style-key="shape_overlay_opacity" /><small>%</small></span></label>
+											<label class="psp-shape-overlay-gradient-only psp-inspector-wide"><span><?php echo esc_html__( 'Direction', 'my-slider-pro' ); ?></span><select data-psp-style-key="shape_overlay_direction"><option value="to bottom"><?php echo esc_html__( 'Top to bottom', 'my-slider-pro' ); ?></option><option value="to top"><?php echo esc_html__( 'Bottom to top', 'my-slider-pro' ); ?></option><option value="to right"><?php echo esc_html__( 'Left to right', 'my-slider-pro' ); ?></option><option value="to left"><?php echo esc_html__( 'Right to left', 'my-slider-pro' ); ?></option><option value="to bottom right"><?php echo esc_html__( 'Diagonal down-right', 'my-slider-pro' ); ?></option><option value="to bottom left"><?php echo esc_html__( 'Diagonal down-left', 'my-slider-pro' ); ?></option></select></label>
+										</div>
 									</div>
 									<div class="psp-layer-collapsible">
 										<div class="psp-accordion-toggle psp-accordion-static"><span class="dashicons dashicons-controls-play psp-acc-lead" aria-hidden="true"></span><?php echo esc_html__( 'Animation', 'my-slider-pro' ); ?></div>
@@ -1426,6 +1452,7 @@ final class AdminPage {
 				<button type="button" class="button psp-add-extra-layer" data-psp-extra-layer-type="description"><?php echo esc_html__( 'Add description', 'my-slider-pro' ); ?></button>
 				<button type="button" class="button psp-add-extra-layer" data-psp-extra-layer-type="button"><?php echo esc_html__( 'Add button', 'my-slider-pro' ); ?></button>
 				<button type="button" class="button psp-add-extra-layer" data-psp-extra-layer-type="image"><?php echo esc_html__( 'Add image', 'my-slider-pro' ); ?></button>
+				<button type="button" class="button psp-add-extra-layer" data-psp-extra-layer-type="shape"><?php echo esc_html__( 'Add shape', 'my-slider-pro' ); ?></button>
 			</div>
 			<div class="psp-extra-layer-list">
 				<?php foreach ( $layers as $index => $layer ) : ?>
@@ -1456,7 +1483,7 @@ final class AdminPage {
 			</summary>
 			<div class="psp-extra-layer-fields">
 			<label><span><?php echo esc_html__( 'Type', 'my-slider-pro' ); ?></span><select class="psp-slide-content-input" name="<?php echo esc_attr( $name . '[type]' ); ?>">
-				<?php foreach ( array( 'heading' => __( 'Heading', 'my-slider-pro' ), 'description' => __( 'Description', 'my-slider-pro' ), 'button' => __( 'Button', 'my-slider-pro' ), 'image' => __( 'Image', 'my-slider-pro' ) ) as $value => $label ) : ?>
+				<?php foreach ( array( 'heading' => __( 'Heading', 'my-slider-pro' ), 'description' => __( 'Description', 'my-slider-pro' ), 'button' => __( 'Button', 'my-slider-pro' ), 'image' => __( 'Image', 'my-slider-pro' ), 'shape' => __( 'Shape', 'my-slider-pro' ) ) as $value => $label ) : ?>
 					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $type, $value ); ?>><?php echo esc_html( $label ); ?></option>
 				<?php endforeach; ?>
 			</select></label>
@@ -1474,6 +1501,16 @@ final class AdminPage {
 			<label><span><?php echo esc_html__( 'Tablet X/Y', 'my-slider-pro' ); ?></span><span class="psp-extra-layer-pair"><input class="psp-slide-content-input" type="number" min="5" max="95" name="<?php echo esc_attr( $name . '[tablet_x]' ); ?>" value="<?php echo esc_attr( (string) $layer['tablet_x'] ); ?>" /><input class="psp-slide-content-input" type="number" min="5" max="95" name="<?php echo esc_attr( $name . '[tablet_y]' ); ?>" value="<?php echo esc_attr( (string) $layer['tablet_y'] ); ?>" /></span></label>
 			<label><span><?php echo esc_html__( 'Phone X/Y', 'my-slider-pro' ); ?></span><span class="psp-extra-layer-pair"><input class="psp-slide-content-input" type="number" min="5" max="95" name="<?php echo esc_attr( $name . '[mobile_x]' ); ?>" value="<?php echo esc_attr( (string) $layer['mobile_x'] ); ?>" /><input class="psp-slide-content-input" type="number" min="5" max="95" name="<?php echo esc_attr( $name . '[mobile_y]' ); ?>" value="<?php echo esc_attr( (string) $layer['mobile_y'] ); ?>" /></span></label>
 			<input type="hidden" name="<?php echo esc_attr( $name . '[width]' ); ?>" value="<?php echo esc_attr( (string) $layer['width'] ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[height]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['height'] ?? 200 ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[radius]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['radius'] ?? 0 ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[ratio_locked]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['ratio_locked'] ?? '' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[overlay_type]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['overlay_type'] ?? 'none' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[overlay_color]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['overlay_color'] ?? '#08101f' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[overlay_color2]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['overlay_color2'] ?? '#000000' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[overlay_opacity]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['overlay_opacity'] ?? 50 ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[overlay_direction]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['overlay_direction'] ?? 'to bottom' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[size_linked]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['size_linked'] ?? '1' ) ); ?>" />
+			<input type="hidden" name="<?php echo esc_attr( $name . '[pos_linked]' ); ?>" value="<?php echo esc_attr( (string) ( $layer['pos_linked'] ?? '' ) ); ?>" />
 			<input type="hidden" name="<?php echo esc_attr( $name . '[animation]' ); ?>" value="<?php echo esc_attr( (string) $layer['animation'] ); ?>" />
 			<input type="hidden" name="<?php echo esc_attr( $name . '[animation_delay]' ); ?>" value="<?php echo esc_attr( (string) $layer['animation_delay'] ); ?>" />
 			<input type="hidden" name="<?php echo esc_attr( $name . '[animation_duration]' ); ?>" value="<?php echo esc_attr( (string) $layer['animation_duration'] ); ?>" />

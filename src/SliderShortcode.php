@@ -547,8 +547,48 @@ final class SliderShortcode {
 					<p><?php echo nl2br( esc_html( $layer['text'] ) ); ?></p>
 				<?php endif; ?>
 			</div>
+		<?php elseif ( 'shape' === $type ) : ?>
+			<?php $shape_overlay = self::shape_overlay_style( $layer ); ?>
+			<div class="my-slider-pro-shape-layer my-slider-pro-layer" style="<?php echo esc_attr( $style ); ?>" aria-hidden="true">
+				<?php if ( '' !== $shape_overlay ) : ?>
+					<span class="my-slider-pro-shape-shade" style="<?php echo esc_attr( $shape_overlay ); ?>"></span>
+				<?php endif; ?>
+			</div>
 		<?php endif; ?>
 		<?php
+	}
+
+	/**
+	 * Build the fill/gradient overlay drawn on top of a shape layer's fill.
+	 *
+	 * Mirrors the slide-background overlay model (solid or gradient at a chosen
+	 * opacity and direction) but sources the values from the shape's own fields.
+	 *
+	 * @param array<string, mixed> $layer Layer data.
+	 * @return string CSS background declaration, or '' when there is no overlay.
+	 */
+	private static function shape_overlay_style( array $layer ): string {
+		$overlay_type = (string) ( $layer['overlay_type'] ?? 'none' );
+		$opacity      = max( 0, min( 100, (int) ( $layer['overlay_opacity'] ?? 50 ) ) ) / 100;
+
+		if ( 'solid' === $overlay_type && $opacity > 0 ) {
+			return 'background:' . self::hex_to_rgba( (string) ( $layer['overlay_color'] ?? '#08101f' ), $opacity ) . ';';
+		}
+
+		if ( 'gradient' === $overlay_type && $opacity > 0 ) {
+			$directions = array( 'to bottom', 'to top', 'to right', 'to left', 'to bottom right', 'to bottom left' );
+			$direction  = (string) ( $layer['overlay_direction'] ?? 'to bottom' );
+			$direction  = in_array( $direction, $directions, true ) ? $direction : 'to bottom';
+
+			return sprintf(
+				'background:linear-gradient(%1$s,%2$s,%3$s);',
+				$direction,
+				self::hex_to_rgba( (string) ( $layer['overlay_color'] ?? '#08101f' ), $opacity ),
+				self::hex_to_rgba( (string) ( $layer['overlay_color2'] ?? '#000000' ), $opacity )
+			);
+		}
+
+		return '';
 	}
 
 	/**
@@ -620,6 +660,19 @@ final class SliderShortcode {
 		if ( 'image' === $type ) {
 			$sizes = self::responsive_sizes( $layer, 'width', 'tablet_width', 'mobile_width', 'size_linked' );
 			return $style . sprintf( ';--my-slider-pro-image-layer-width:%1$dpx;--my-slider-pro-tablet-image-layer-width:%3$dpx;--my-slider-pro-mobile-image-layer-width:%4$dpx;--my-slider-pro-image-layer-opacity:%2$.2f', $sizes['desktop'], (int) $layer['opacity'] / 100, $sizes['tablet'], $sizes['mobile'] );
+		}
+		if ( 'shape' === $type ) {
+			$sizes = self::responsive_sizes( $layer, 'width', 'tablet_width', 'mobile_width', 'size_linked' );
+			return $style . sprintf(
+				';--my-slider-pro-shape-width:%1$dpx;--my-slider-pro-tablet-shape-width:%2$dpx;--my-slider-pro-mobile-shape-width:%3$dpx;--my-slider-pro-shape-height:%4$dpx;--my-slider-pro-shape-radius:%5$dpx;--my-slider-pro-shape-fill:%6$s;--my-slider-pro-shape-opacity:%7$.2f',
+				$sizes['desktop'],
+				$sizes['tablet'],
+				$sizes['mobile'],
+				(int) $layer['height'],
+				(int) $layer['radius'],
+				(string) $layer['background'],
+				(int) $layer['opacity'] / 100
+			);
 		}
 		$sizes = self::responsive_sizes( $layer, 'size', 'tablet_size', 'mobile_size', 'size_linked' );
 		if ( 'button' === $type ) {
