@@ -279,7 +279,8 @@
 			heading: config.headingLayerLabel || 'Heading',
 			description: config.descriptionLayerLabel || 'Text',
 			button: config.buttonLayerLabel || 'Button',
-			image: config.imageLayerLabel || 'Image'
+			image: config.imageLayerLabel || 'Image',
+			shape: config.shapeLayerLabel || 'Shape'
 		};
 
 		return ( labels[ type ] || labels.heading ) + ' ' + ( index + 1 );
@@ -297,6 +298,11 @@
 	}
 
 	function extraLayerExists( layer ) {
+		if ( 'shape' === layer.type ) {
+			// A shape is defined by its box and fill, not by text or a URL, so it
+			// always renders once added.
+			return true;
+		}
 		return 'image' === layer.type ? !! layer.url : !! layer.text;
 	}
 
@@ -325,7 +331,17 @@
 			button_url: 'link_url',
 			image_link_url: 'link_url',
 			image_layer_url: 'url',
-			image_layer_alt: 'alt'
+			image_layer_alt: 'alt',
+			shape_fill: 'background',
+			shape_radius: 'radius',
+			shape_width: 'width',
+			shape_height: 'height',
+			shape_opacity: 'opacity',
+			shape_overlay_type: 'overlay_type',
+			shape_overlay_color: 'overlay_color',
+			shape_overlay_color2: 'overlay_color2',
+			shape_overlay_opacity: 'overlay_opacity',
+			shape_overlay_direction: 'overlay_direction'
 		};
 
 		return map[ styleKey ] || '';
@@ -482,7 +498,7 @@
 
 	// Grey out each Add Layer button whose type is already at the per-slide cap.
 	function syncAddLayerButtons() {
-		[ 'heading', 'description', 'button', 'image' ].forEach( function ( type ) {
+		[ 'heading', 'description', 'button', 'image', 'shape' ].forEach( function ( type ) {
 			var full = ! canAddLayerType( type );
 
 			$layerWorkspace.find( '.psp-add-extra-layer[data-psp-extra-layer-type="' + type + '"]' )
@@ -540,14 +556,16 @@
 	}
 
 	function makeExtraLayerRow( attachmentId, index, type ) {
+		var isShape = 'shape' === type;
+		var shapeWidth = isShape ? '320' : '220';
 		var defaults = {
 			type: type || 'heading',
-			text: 'button' === type ? 'Button label' : ( 'image' === type ? '' : 'New ' + type ),
+			text: 'button' === type ? 'Button label' : ( 'image' === type || isShape ? '' : 'New ' + type ),
 			url: '',
 			link_url: '',
 			alt: '',
 			color: 'button' === type ? '#172033' : '#ffffff',
-			background: '#ffffff',
+			background: isShape ? '#3858e9' : '#ffffff',
 			font_family: 'montserrat',
 			font_style: 'default',
 			size: 'heading' === type ? '64' : ( 'button' === type ? '16' : '20' ),
@@ -560,9 +578,17 @@
 			tablet_y: '50',
 			mobile_x: '50',
 			mobile_y: '50',
-			width: '220',
-			tablet_width: '220',
-			mobile_width: '220',
+			width: shapeWidth,
+			tablet_width: shapeWidth,
+			mobile_width: shapeWidth,
+			height: '200',
+			radius: '0',
+			ratio_locked: '',
+			overlay_type: 'none',
+			overlay_color: '#08101f',
+			overlay_color2: '#000000',
+			overlay_opacity: '50',
+			overlay_direction: 'to bottom',
 			size_linked: '1',
 			pos_linked: '',
 			animation: 'fade',
@@ -577,7 +603,8 @@
 			[ 'heading', 'Heading' ],
 			[ 'description', config.descriptionLayerLabel || 'Text' ],
 			[ 'button', 'Button' ],
-			[ 'image', 'Image' ]
+			[ 'image', 'Image' ],
+			[ 'shape', config.shapeLayerLabel || 'Shape' ]
 		];
 		var fontOptions = [
 			[ 'theme', 'Theme default' ],
@@ -633,6 +660,14 @@
 			input( 'mobile_size', 'hidden' ),
 			input( 'tablet_width', 'hidden' ),
 			input( 'mobile_width', 'hidden' ),
+			input( 'height', 'hidden' ),
+			input( 'radius', 'hidden' ),
+			input( 'ratio_locked', 'hidden' ),
+			input( 'overlay_type', 'hidden' ),
+			input( 'overlay_color', 'hidden' ),
+			input( 'overlay_color2', 'hidden' ),
+			input( 'overlay_opacity', 'hidden' ),
+			input( 'overlay_direction', 'hidden' ),
 			input( 'size_linked', 'hidden' ),
 			input( 'pos_linked', 'hidden' ),
 			input( 'animation', 'hidden' ),
@@ -812,7 +847,8 @@
 			[ 'heading', config.addHeadingText || 'Add heading' ],
 			[ 'description', config.addDescriptionText || 'Add description' ],
 			[ 'button', config.addButtonLayerText || 'Add button' ],
-			[ 'image', config.addImageLayerText || 'Add image' ]
+			[ 'image', config.addImageLayerText || 'Add image' ],
+			[ 'shape', config.addShapeLayerText || 'Add shape' ]
 		].forEach( function ( entry ) {
 			$actions.append( $( '<button>', {
 				type: 'button',
@@ -1063,6 +1099,15 @@
 				fontStyle: String( $row.find( '[name$="[font_style]"]' ).val() || 'default' ),
 				size: String( $row.find( '[name$="[' + extraEffectiveSizeKey( $row, 'size' ) + ']"]' ).val() || $row.find( '[name$="[size]"]' ).val() || ( 'heading' === type ? '64' : '20' ) ),
 				width: String( $row.find( '[name$="[' + extraEffectiveSizeKey( $row, 'width' ) + ']"]' ).val() || $row.find( '[name$="[width]"]' ).val() || '220' ),
+				height: String( $row.find( '[name$="[height]"]' ).val() || '200' ),
+				radius: String( $row.find( '[name$="[radius]"]' ).val() || '0' ),
+				overlay: {
+					type: String( $row.find( '[name$="[overlay_type]"]' ).val() || 'none' ),
+					color: String( $row.find( '[name$="[overlay_color]"]' ).val() || '#08101f' ),
+					color2: String( $row.find( '[name$="[overlay_color2]"]' ).val() || '#000000' ),
+					opacity: String( $row.find( '[name$="[overlay_opacity]"]' ).val() || '50' ),
+					direction: String( $row.find( '[name$="[overlay_direction]"]' ).val() || 'to bottom' )
+				},
 				opacity: String( $row.find( '[name$="[opacity]"]' ).val() || '100' ),
 				desktop: layerPosition( $row, 'desktop_x', 'desktop_y', 50, 50 ),
 				tablet: '1' === String( $row.find( '[name$="[pos_linked]"]' ).val() || '' ) ? layerPosition( $row, 'desktop_x', 'desktop_y', 50, 50 ) : layerPosition( $row, 'tablet_x', 'tablet_y', 50, 50 ),
@@ -1208,6 +1253,16 @@
 		$layerWorkspace.find( '.psp-overlay-gradient-only' ).toggleClass( 'is-hidden', 'gradient' !== type );
 		$layerWorkspace.find( '#psp-overlay-color-label' ).text( 'gradient' === type ? ( config.firstColorLabel || 'First color' ) : ( config.colorLabel || 'Color' ) );
 		$layerWorkspace.find( '.psp-overlay-opacity-field .psp-range-out' ).text( ( $item && $item.length ? styleValue( $item, 'overlay_opacity', '50' ) : '50' ) + '%' );
+	}
+
+	// Show/hide the shape inspector's overlay sub-fields: everything hides when
+	// the overlay is 'none', and the second color and direction show only for a
+	// gradient. Mirrors syncOverlayControls but for a shape's own overlay.
+	function syncShapeOverlayControls( type ) {
+		type = type || 'none';
+		$layerWorkspace.find( '[data-psp-shape-overlay-fields]' ).toggleClass( 'is-hidden', 'none' === type );
+		$layerWorkspace.find( '.psp-shape-overlay-gradient-only' ).toggleClass( 'is-hidden', 'gradient' !== type );
+		$layerWorkspace.find( '#psp-shape-overlay-color-label' ).text( 'gradient' === type ? ( config.firstColorLabel || 'First color' ) : ( config.overlayColorLabel || 'Overlay color' ) );
 	}
 
 	function syncBackgroundThumb( $item ) {
@@ -1414,6 +1469,8 @@
 			} );
 		} );
 		syncOverlayControls( $item );
+		syncShapeOverlayControls( 'shape' === activeStyleSection && keys.extraIndex >= 0 ? styleValue( extraLayerRow( keys.extraIndex ), 'overlay_type', 'none' ) : 'none' );
+		$layerWorkspace.find( '[data-psp-shape-lock]' ).prop( 'checked', 'shape' === activeStyleSection && keys.extraIndex >= 0 && '1' === String( extraLayerRow( keys.extraIndex ).find( '[name$="[ratio_locked]"]' ).val() || '' ) );
 		syncBackgroundThumb( $item );
 		syncAddLayerButtons();
 		$layerStripItems.empty();
@@ -1440,7 +1497,7 @@
 					'aria-pressed': layer.key === activeEditorLayer ? 'true' : 'false'
 				} ).append(
 					$( '<span>', { 'class': 'psp-layer-strip-handle', text: '\u22ee\u22ee', 'aria-hidden': 'true' } ),
-					$( '<span>', { 'class': 'psp-layer-strip-icon', text: 'heading' === layer.key || 'heading' === layer.extraType ? 'H' : ( 'description' === layer.key || 'description' === layer.extraType ? 'T' : ( 'image' === layer.key || 'image' === layer.extraType ? '\u25a7' : '\u25ad' ) ), 'aria-hidden': 'true' } ),
+					$( '<span>', { 'class': 'psp-layer-strip-icon', text: 'heading' === layer.key || 'heading' === layer.extraType ? 'H' : ( 'description' === layer.key || 'description' === layer.extraType ? 'T' : ( 'image' === layer.key || 'image' === layer.extraType ? '\u25a7' : ( 'shape' === layer.extraType ? '\u25fc' : '\u25ad' ) ) ), 'aria-hidden': 'true' } ),
 					$( '<strong>' ).text( layer.label + ' layer' ),
 					$( '<span>', { 'class': 'psp-layer-strip-coordinates', text: 'X ' + layerX + '%  Y ' + layerY + '%' } )
 				),
@@ -1531,6 +1588,34 @@
 			} ) );
 			$layer.append( $( '<span>', { 'class': 'psp-layer-resize-handle', 'aria-hidden': 'true' } ) );
 			$layer.css( '--psp-layer-z', layerZ );
+		} else if ( 'shape' === layer.type ) {
+			var $shapeBox = $( '<span>', { 'class': 'psp-preview-shape', 'aria-hidden': 'true' } );
+			var shapeShade = overlayBackground( {
+				overlayType: layer.overlay.type,
+				overlayColor: layer.overlay.color,
+				overlayColor2: layer.overlay.color2,
+				overlayOpacity: parseInt( layer.overlay.opacity, 10 ),
+				overlayDirection: layer.overlay.direction
+			} );
+
+			$layer = $( '<div>', {
+				'class': 'psp-preview-shape-layer psp-draggable-layer',
+				'data-psp-layer': 'extra-' + index,
+				'data-psp-layer-label': config.shapeLayerLabel || 'Shape'
+			} );
+			if ( shapeShade ) {
+				$shapeBox.append( $( '<span>', { 'class': 'psp-preview-shape-shade', 'aria-hidden': 'true' } ).css( 'background', shapeShade ) );
+			}
+			$layer.append( $shapeBox );
+			$layer.append( $( '<span>', { 'class': 'psp-layer-resize-handle', 'aria-hidden': 'true' } ) );
+			$layer.css( {
+				'--psp-layer-z': layerZ,
+				'--psp-shape-width': ( parseInt( layer.width, 10 ) || 320 ) + 'px',
+				'--psp-shape-height': ( parseInt( layer.height, 10 ) || 200 ) + 'px',
+				'--psp-shape-radius': ( parseInt( layer.radius, 10 ) || 0 ) + 'px',
+				'--psp-shape-fill': layer.background,
+				'--psp-shape-opacity': layerOpacity( layer.opacity )
+			} );
 		} else {
 			if ( ! layer.text ) {
 				return;
@@ -2110,9 +2195,14 @@
 
 		if ( extraIndex >= 0 ) {
 			extraType = extraLayerRow( extraIndex ).find( '[name$="[type]"]' ).val() || 'heading';
-			return 'image' === extraType ?
-				{ key: 'width', min: 40, max: 800, step: 1, css: '--psp-image-layer-width', unit: 'px', extraIndex: extraIndex, extraType: extraType } :
-				{ key: 'size', min: 'heading' === extraType ? 24 : 12, max: 'heading' === extraType ? 96 : 36, step: 4, css: 'button' === extraType ? '--psp-button-font-size' : ( 'heading' === extraType ? '--psp-heading-size' : '--psp-description-size' ), unit: 'px', extraIndex: extraIndex, extraType: extraType };
+			if ( 'image' === extraType ) {
+				return { key: 'width', min: 40, max: 800, step: 1, css: '--psp-image-layer-width', unit: 'px', extraIndex: extraIndex, extraType: extraType };
+			}
+			if ( 'shape' === extraType ) {
+				// The resize handle drags a shape's width; height is set in the inspector.
+				return { key: 'width', min: 40, max: 800, step: 1, css: '--psp-shape-width', unit: 'px', extraIndex: extraIndex, extraType: extraType };
+			}
+			return { key: 'size', min: 'heading' === extraType ? 24 : 12, max: 'heading' === extraType ? 96 : 36, step: 4, css: 'button' === extraType ? '--psp-button-font-size' : ( 'heading' === extraType ? '--psp-heading-size' : '--psp-description-size' ), unit: 'px', extraIndex: extraIndex, extraType: extraType };
 		}
 		return configs[ layer ] || null;
 	}
@@ -2169,7 +2259,7 @@
 		value = Math.max( config.min, Math.min( config.max, Math.round( value ) ) );
 		if ( config.extraIndex >= 0 ) {
 			extraLayerRow( config.extraIndex ).find( '[name$="[' + extraEffectiveSizeKey( extraLayerRow( config.extraIndex ), config.key ) + ']"]' ).val( value );
-			$layerWorkspace.find( '[data-psp-style-key="image_width"]' ).val( value );
+			$layerWorkspace.find( '[data-psp-style-key="image_width"], [data-psp-style-key="shape_width"]' ).val( value );
 			$layerWorkspace.find( '[data-psp-style-key="heading_size"], [data-psp-style-key="description_size"], [data-psp-style-key="button_font_size"]' ).val( value );
 		} else {
 			activeSlideScope().find( '[name$="[' + effectiveSizeKey( config.key ) + ']"]' ).val( value );
@@ -2183,6 +2273,57 @@
 		if ( shouldAnnounce ) {
 			announce( ( String( $layer.attr( 'data-psp-layer-label' ) || 'Layer' ) ) + ' resized to ' + value + config.unit + '.' );
 		}
+	}
+
+	var SHAPE_MIN_W = 40;
+	var SHAPE_MAX_W = 800;
+	var SHAPE_MIN_H = 20;
+	var SHAPE_MAX_H = 800;
+
+	// A shape resizes in two dimensions. Width and height are set independently,
+	// and the preview, the saved fields, and the inspector numbers stay in sync.
+	function setShapeSize( $layer, extraIndex, width, height, shouldAnnounce ) {
+		var $row = extraLayerRow( extraIndex );
+
+		if ( ! $row.length ) {
+			return;
+		}
+		width = Math.max( SHAPE_MIN_W, Math.min( SHAPE_MAX_W, Math.round( width ) ) );
+		height = Math.max( SHAPE_MIN_H, Math.min( SHAPE_MAX_H, Math.round( height ) ) );
+		$row.find( '[name$="[' + extraEffectiveSizeKey( $row, 'width' ) + ']"]' ).val( width );
+		$row.find( '[name$="[height]"]' ).val( height );
+		$layer.css( { '--psp-shape-width': width + 'px', '--psp-shape-height': height + 'px' } );
+		$layerWorkspace.find( '[data-psp-style-key="shape_width"]' ).val( width );
+		$layerWorkspace.find( '[data-psp-style-key="shape_height"]' ).val( height );
+
+		if ( shouldAnnounce ) {
+			announce( ( String( $layer.attr( 'data-psp-layer-label' ) || 'Shape' ) ) + ' resized to ' + width + ' by ' + height + ' pixels.' );
+		}
+	}
+
+	// Resize a shape from a pointer drag: free by default (width follows the
+	// horizontal drag, height the vertical), or locked to the starting aspect
+	// ratio by projecting the drag onto the shape's diagonal.
+	function resizeShapeFromDrag( state, dx, dy ) {
+		var width;
+		var height;
+
+		if ( state.ratioLocked && state.startW > 0 && state.startH > 0 ) {
+			var span = ( state.startW * state.startW ) + ( state.startH * state.startH );
+			var scale = 1 + ( ( ( dx * state.startW ) + ( dy * state.startH ) ) / span );
+			// Clamp the scale so both dimensions stay in range without skewing the ratio.
+			var minScale = Math.max( SHAPE_MIN_W / state.startW, SHAPE_MIN_H / state.startH );
+			var maxScale = Math.min( SHAPE_MAX_W / state.startW, SHAPE_MAX_H / state.startH );
+
+			scale = Math.max( minScale, Math.min( maxScale, scale ) );
+			width = state.startW * scale;
+			height = state.startH * scale;
+		} else {
+			width = state.startW + dx;
+			height = state.startH + dy;
+		}
+
+		setShapeSize( state.$layer, state.extraIndex, width, height, false );
 	}
 
 	function snapLayerCoordinate( value, anchors ) {
@@ -2592,12 +2733,20 @@
 		$preview.find( '.psp-draggable-layer' ).removeClass( 'is-selected' );
 		$layer.addClass( 'is-selected is-resizing' ).trigger( 'focus' );
 		this.setPointerCapture( pointerEvent.pointerId );
+		var resizeExtraIndex = extraLayerIndex( layer );
+		var resizeIsShape = resizeExtraIndex >= 0 && 'shape' === String( extraLayerRow( resizeExtraIndex ).find( '[name$="[type]"]' ).val() || '' );
 		resizeState = {
 			handle: this,
+			$layer: $layer,
 			layer: layer,
 			startX: pointerEvent.clientX,
 			startY: pointerEvent.clientY,
 			startSize: layerSizeValue( activeSlideItem(), layer ),
+			isShape: resizeIsShape,
+			extraIndex: resizeExtraIndex,
+			startW: resizeIsShape ? ( parseInt( extraLayerRow( resizeExtraIndex ).find( '[name$="[' + extraEffectiveSizeKey( extraLayerRow( resizeExtraIndex ), 'width' ) + ']"]' ).val(), 10 ) || 320 ) : 0,
+			startH: resizeIsShape ? ( parseInt( extraLayerRow( resizeExtraIndex ).find( '[name$="[height]"]' ).val(), 10 ) || 200 ) : 0,
+			ratioLocked: resizeIsShape && '1' === String( extraLayerRow( resizeExtraIndex ).find( '[name$="[ratio_locked]"]' ).val() || '' ),
 			pointerId: pointerEvent.pointerId
 		};
 		if ( extraLayerIndex( layer ) < 0 ) {
@@ -2615,6 +2764,10 @@
 		}
 
 		event.preventDefault();
+		if ( resizeState.isShape ) {
+			resizeShapeFromDrag( resizeState, pointerEvent.clientX - resizeState.startX, pointerEvent.clientY - resizeState.startY );
+			return;
+		}
 		config = layerSizeConfig( resizeState.layer );
 		delta = ( pointerEvent.clientX - resizeState.startX ) + ( pointerEvent.clientY - resizeState.startY );
 		setLayerSize( $layer, resizeState.layer, resizeState.startSize + ( delta / config.step ), false );
@@ -2631,7 +2784,17 @@
 			this.releasePointerCapture( pointerEvent.pointerId );
 		}
 		$layer.removeClass( 'is-resizing' );
-		setLayerSize( $layer, resizeState.layer, layerSizeValue( activeSlideItem(), resizeState.layer ), true );
+		if ( resizeState.isShape ) {
+			setShapeSize(
+				$layer,
+				resizeState.extraIndex,
+				parseInt( extraLayerRow( resizeState.extraIndex ).find( '[name$="[' + extraEffectiveSizeKey( extraLayerRow( resizeState.extraIndex ), 'width' ) + ']"]' ).val(), 10 ) || resizeState.startW,
+				parseInt( extraLayerRow( resizeState.extraIndex ).find( '[name$="[height]"]' ).val(), 10 ) || resizeState.startH,
+				true
+			);
+		} else {
+			setLayerSize( $layer, resizeState.layer, layerSizeValue( activeSlideItem(), resizeState.layer ), true );
+		}
 		resizeState = null;
 	} );
 	$preview.on( 'pointermove', '.psp-draggable-layer', function ( event ) {
@@ -2740,7 +2903,18 @@
 		}
 
 		$field.val( $( this ).val() );
+		if ( 'shape_overlay_type' === key ) {
+			syncShapeOverlayControls( $( this ).val() );
+		}
 		refreshPreview();
+	} );
+	$layerWorkspace.on( 'change', '[data-psp-shape-lock]', function () {
+		var extraIndex = extraLayerIndex( activeEditorLayer );
+
+		if ( extraIndex < 0 ) {
+			return;
+		}
+		extraLayerRow( extraIndex ).find( '[name$="[ratio_locked]"]' ).val( $( this ).is( ':checked' ) ? '1' : '' );
 	} );
 	$layerWorkspace.on( 'change', '[data-psp-link-key]', function () {
 		var linkKey = String( $( this ).attr( 'data-psp-link-key' ) || '' );

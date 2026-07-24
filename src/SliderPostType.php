@@ -475,6 +475,7 @@ final class SliderPostType {
 			'description' => (int) ( $base_counts['description'] ?? 0 ),
 			'button'      => (int) ( $base_counts['button'] ?? 0 ),
 			'image'       => (int) ( $base_counts['image'] ?? 0 ),
+			'shape'       => 0,
 		);
 
 		foreach ( $value as $raw ) {
@@ -483,7 +484,7 @@ final class SliderPostType {
 			}
 
 			$type = isset( $raw['type'] ) && is_scalar( $raw['type'] ) ? sanitize_key( (string) $raw['type'] ) : '';
-			if ( ! in_array( $type, array( 'heading', 'description', 'button', 'image' ), true ) ) {
+			if ( ! in_array( $type, array( 'heading', 'description', 'button', 'image', 'shape' ), true ) ) {
 				continue;
 			}
 
@@ -526,6 +527,17 @@ final class SliderPostType {
 				'width'              => $width,
 				'tablet_width'       => $tablet_width,
 				'mobile_width'       => $mobile_width,
+				// Shape layers: a rectangle's own box, corner radius, fill (reuses
+				// `background`), plus an optional solid/gradient overlay that mirrors
+				// the slide background overlay.
+				'height'             => self::sanitize_style_number( $raw['height'] ?? null, 200, 20, 800 ),
+				'radius'             => self::sanitize_style_number( $raw['radius'] ?? null, 0, 0, 400 ),
+				'ratio_locked'       => self::sanitize_link_flag( $raw, 'ratio_locked', false ),
+				'overlay_type'       => in_array( $raw['overlay_type'] ?? '', array( 'none', 'solid', 'gradient' ), true ) ? $raw['overlay_type'] : 'none',
+				'overlay_color'      => self::sanitize_hex_color( $raw['overlay_color'] ?? '', '#08101f' ),
+				'overlay_color2'     => self::sanitize_hex_color( $raw['overlay_color2'] ?? '', '#000000' ),
+				'overlay_opacity'    => self::sanitize_style_number( $raw['overlay_opacity'] ?? null, 50, 0, 100 ),
+				'overlay_direction'  => in_array( $raw['overlay_direction'] ?? '', array( 'to bottom', 'to top', 'to right', 'to left', 'to bottom right', 'to bottom left' ), true ) ? $raw['overlay_direction'] : 'to bottom',
 				'size_linked'        => self::sanitize_link_flag( $raw, 'size_linked', true ),
 				'pos_linked'         => self::sanitize_link_flag( $raw, 'pos_linked', false ),
 				'animation'          => self::sanitize_animation_type( $raw['animation'] ?? 'fade' ),

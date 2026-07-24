@@ -4,7 +4,7 @@ Tags: slider, image slider, responsive, homepage, carousel
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Copyright: 2026 Aminudin Murad
@@ -44,6 +44,10 @@ MY Slider PRO is free and open source. If it helps you build sliders, please con
 Thank you for helping keep MY Slider PRO improving and freely available.
 
 == Changelog ==
+
+= 1.0.5 =
+
+* Added a new Shape layer (rectangle) you can add to any slide from the Add layer toolbar. Set its fill colour, corner radius, width and height, and opacity; add an optional solid or gradient overlay; and place it with the same drag, X/Y, anchor, and animation controls as the other layers. Drag the corner handle to freely resize width and height, or turn on "Lock proportions" to keep the aspect ratio. Up to two shape layers per slide.
 
 = 1.0.4 =
 
